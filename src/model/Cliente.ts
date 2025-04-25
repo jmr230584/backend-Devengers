@@ -115,4 +115,39 @@ export class Cliente {
             return null;
         }
     }
+    static async cadastrarCliete(cliente: Cliente): Promise<Boolean> {      
+        try {
+            // Cria a consulta (query) para inserir o registro de um  no banco de dados, retorna o ID do aluno que foi criado no final
+            const queryInsertCliente = `
+                INSERT INTO Aluno (nome_completo, email, senha, cpf, celular)
+                VALUES (
+                    '${cliente.getNomeCompleto().toUpperCase()}',
+                    '${cliente.getEmail().toUpperCase()}',
+                    '${cliente.getSenha()}',
+                    '${cliente.getCpf().toUpperCase()}',
+                    '${cliente.getCelular().toLowerCase()}',
+                )
+                RETURNING id_cliente;`;
+
+            // Executa a query no banco de dados e armazena o resultado
+            const result = await database.query(queryInsertCliente);
+
+            // verifica se a quantidade de linhas que foram alteradas é maior que 0
+            if (result.rows.length > 0) {
+                // Exibe a mensagem de sucesso
+                console.log(`Cliente cadastrado com sucesso. ID: ${result.rows[0].id_cliente}`);
+                // retorna verdadeiro
+                return true;
+            }
+
+            // caso a consulta não tenha tido sucesso, retorna falso
+            return false;
+        // captura erro
+        } catch (error) {
+            // Exibe mensagem com detalhes do erro no console
+            console.error(`Erro ao cadastrar cliente: ${error}`);
+            // retorna falso
+            return false;
+        }
+    }
 }

@@ -102,5 +102,32 @@ export class Ingresso {
             return null;
         }
     }
+     
+    static async cadastrarIngresso(ingresso: Ingresso): Promise<boolean> {
+        try {
+            const queryInsertIngresso = `
+                INSERT INTO Ingresso (id_sessao, id_cliente, status_ingresso, preco_ingresso)
+                VALUES (
+                    ${ingresso.getIdSessao()},
+                    ${ingresso.getIdCliente()},
+                    '${ingresso.getStatusIngresso()}',
+                    ${ingresso.getPrecoIngresso()}
+                )
+                RETURNING id_ingresso;
+            `;
+    
+            const result = await database.query(queryInsertIngresso);
+    
+            if (result.rows.length > 0) {
+                console.log(`Ingresso cadastrado com sucesso. ID: ${result.rows[0].id_ingresso}`);
+                return true;
+            }
+    
+            return false;
+        } catch (error) {
+            console.error(`Erro ao cadastrar ingresso: ${error}`);
+            return false;
+        }
+    }
     
 }

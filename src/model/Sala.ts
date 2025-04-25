@@ -105,4 +105,33 @@ export class Sala {
             return null;
         }
     }
+    static async cadastrarSala(sala: Sala): Promise<boolean> {
+        try {
+            const queryInsertSala = `
+                INSERT INTO Sala (numero_sala, tipo_sala, numero_assento, fileira)
+                VALUES (
+                    ${sala.getNumeroSala()},
+                    '${sala.getTipoSala()}',
+                    ${sala.getNumeroAssento()},
+                    ${sala.getFileira()}
+                )
+                RETURNING id_sala;
+            `;
+    
+            const result = await database.query(queryInsertSala);
+    
+            if (result.rows.length > 0) {
+                console.log(`Sala cadastrada com sucesso. ID: ${result.rows[0].id_sala}`);
+                return true;
+            }
+    
+            return false;
+        } catch (error) {
+            console.error(`Erro ao cadastrar sala: ${error}`);
+            return false;
+        }
+    }
+    
+    
 }
+     

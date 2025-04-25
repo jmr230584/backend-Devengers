@@ -160,4 +160,39 @@ export class Filme {
 
         
     }
+
+    static async cadastrarFilme(filme: Filme): Promise<boolean> {
+        try {
+            // Cria a consulta para inserir um novo filme no banco de dados, retornando o ID do filme inserido
+            const queryInsertFilme = `
+                INSERT INTO Filme (titulo, sinopse, duracao, classificacao_etaria, genero, ano_lancamento, poster_filme, disponibilidade)
+                VALUES (
+                    '${filme.getTitulo().toUpperCase()}',
+                    '${filme.getSinopse()}',
+                    '${filme.getDuracao()}',
+                    '${filme.getClassificacaoEtaria()}',
+                    '${filme.getGenero().toUpperCase()}',
+                    ${filme.getAnoLancamento()},
+                    '${filme.getPosterFilme()}',
+                    '${filme.getDisponibilidade()}'
+                )
+                RETURNING id_filme;
+            `;
+    
+            // Executa a query no banco de dados
+            const result = await database.query(queryInsertFilme);
+    
+            // Verifica se a inserção foi bem-sucedida
+            if (result.rows.length > 0) {
+                console.log(`Filme cadastrado com sucesso. ID: ${result.rows[0].id_filme}`);
+                return true;
+            }
+    
+            return false;
+        } catch (error) {
+            console.error(`Erro ao cadastrar filme: ${error}`);
+            return false;
+        }
+    }
+    
 }

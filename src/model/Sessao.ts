@@ -103,4 +103,32 @@ export class Sessao {
             return null;
         }
     }
+    static async cadastrarSessao(sessao: Sessao): Promise<boolean> {
+        try {
+            const queryInsertSessao = `
+                INSERT INTO Sessao (id_filme, id_sala, horario, data)
+                VALUES (
+                    ${sessao.getIdFilme()},
+                    ${sessao.getIdSala()},
+                    '${sessao.getHorario()}',
+                    '${sessao.getData()}'
+                )
+                RETURNING id_sessao;
+            `;
+    
+            const result = await database.query(queryInsertSessao);
+    
+            if (result.rows.length > 0) {
+                console.log(`Sessão cadastrada com sucesso. ID: ${result.rows[0].id_sessao}`);
+                return true;
+            }
+    
+            return false;
+        } catch (error) {
+            console.error(`Erro ao cadastrar sessão: ${error}`);
+            return false;
+        }
+    }
+    
+
 }
