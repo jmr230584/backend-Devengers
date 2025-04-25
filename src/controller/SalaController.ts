@@ -2,7 +2,14 @@
 import { Request, Response } from "express";  
 
 // Importa o modelo 'Sala', que provavelmente contém métodos e propriedades relacionadas às salas.
-import { Sala } from "../model/Sala";  
+import { Sala } from "../model/Sala"; 
+
+interface SalaDTO{
+    numeroSala: number;
+    tipoSala: string;
+    numeroAssento: number;
+    fileira: number;
+}
 
 // Declara a classe 'SalaController', que herda de 'Sala', permitindo acesso aos métodos e propriedades da classe 'Sala'.
 export class SalaController extends Sala {  
