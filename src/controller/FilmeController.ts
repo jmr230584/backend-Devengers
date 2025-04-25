@@ -28,4 +28,5 @@ export class FilmeController extends Filme {
             return res.status(400).json({ mensagem: "Falha ao listar filmes." });
         }
     }
+    
 }

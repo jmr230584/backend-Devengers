@@ -1,46 +1,101 @@
 // Importa a classe DataBaseModel, que provavelmente gerencia a conexão com o banco de dados.
-import { DataBaseModel } from "./DataBaseModel";  
+import { DataBaseModel } from "./DataBaseModel";
 
 // Cria uma instância do DataBaseModel e acessa a propriedade 'pool', que representa a conexão com o banco de dados.
-const database = new DataBaseModel().pool;  
+const database = new DataBaseModel().pool;
 
-// Define a classe 'Cliente', que modela os dados de um cliente no sistema.
-export class Cliente {  
-    // Declara as propriedades privadas da classe, que representam os dados de um cliente.
-    private idCliente: number = 0;  
-    private nomeCompleto: string;  
-    private email: string;  
-    private senha: string;  
-    private cpf: string;  
-    private celular: string;  
+/**
+ * Classe que representa um Cliente no sistema.
+ */
+export class Cliente {
 
-    // O construtor inicializa as propriedades da classe com os valores passados ao instanciar o objeto.
-    constructor(nomeCompleto: string, email: string, senha: string, cpf: string, celular: string) {  
-        this.nomeCompleto = nomeCompleto;  
-        this.email = email;  
-        this.senha = senha;  
-        this.cpf = cpf;  
-        this.celular = celular;  
+    /* Atributos privados */
+    private idCliente: number = 0;
+    private nomeCompleto: string;
+    private email: string;
+    private senha: string;
+    private cpf: string;
+    private celular: string;
+
+    /**
+     * Construtor da classe Cliente
+     * 
+     * @param nomeCompleto Nome completo do cliente
+     * @param email Email do cliente
+     * @param senha Senha do cliente
+     * @param cpf CPF do cliente
+     * @param celular Celular do cliente
+     */
+    constructor(nomeCompleto: string, email: string, senha: string, cpf: string, celular: string) {
+        this.nomeCompleto = nomeCompleto;
+        this.email = email;
+        this.senha = senha;
+        this.cpf = cpf;
+        this.celular = celular;
     }
 
-    // Método para definir o id do cliente. É utilizado para atribuir um valor ao idCliente.
-    public setIdCliente(id: number): void {  
-        this.idCliente = id;  
+    /* Métodos Get e Set */
+
+    public getIdCliente(): number {
+        return this.idCliente;
     }
 
-    // Método estático assíncrono que retorna uma lista de objetos 'Cliente' a partir de dados no banco de dados.
-    static async listarClientes(): Promise<Array<Cliente> | null> {  
-        const lista: Array<Cliente> = [];  // Cria um array vazio para armazenar os clientes.
+    public setIdCliente(id: number): void {
+        this.idCliente = id;
+    }
 
-        try {  
-            // Define a consulta SQL para buscar todos os clientes da tabela 'Cliente'.
-            const query = `SELECT * FROM Cliente;`;  
-            // Executa a consulta e espera pela resposta.
+    public getNomeCompleto(): string {
+        return this.nomeCompleto;
+    }
+
+    public setNomeCompleto(nome: string): void {
+        this.nomeCompleto = nome;
+    }
+
+    public getEmail(): string {
+        return this.email;
+    }
+
+    public setEmail(email: string): void {
+        this.email = email;
+    }
+
+    public getSenha(): string {
+        return this.senha;
+    }
+
+    public setSenha(senha: string): void {
+        this.senha = senha;
+    }
+
+    public getCpf(): string {
+        return this.cpf;
+    }
+
+    public setCpf(cpf: string): void {
+        this.cpf = cpf;
+    }
+
+    public getCelular(): string {
+        return this.celular;
+    }
+
+    public setCelular(celular: string): void {
+        this.celular = celular;
+    }
+
+    /**
+     * Método estático para listar todos os clientes do banco de dados
+     * @returns Lista de clientes ou null em caso de erro
+     */
+    static async listarClientes(): Promise<Array<Cliente> | null> {
+        const lista: Array<Cliente> = [];
+
+        try {
+            const query = `SELECT * FROM Cliente;`;
             const resposta = await database.query(query);
 
-            // Itera sobre cada linha da resposta do banco de dados.
-            resposta.rows.forEach((linha: any) => {  
-                // Cria um novo objeto 'Cliente' a partir dos dados da linha.
+            resposta.rows.forEach((linha: any) => {
                 const cliente = new Cliente(
                     linha.nome_completo,
                     linha.email,
@@ -48,19 +103,14 @@ export class Cliente {
                     linha.cpf,
                     linha.celular
                 );
-                // Atribui o id_cliente à instância do objeto 'Cliente'.
-                cliente.setIdCliente(linha.id_cliente);  
-                // Adiciona o cliente à lista.
-                lista.push(cliente);  
+                cliente.setIdCliente(linha.id_cliente);
+                lista.push(cliente);
             });
 
-            // Retorna a lista de clientes.
-            return lista;  
-        } catch (error) {  
-            // Exibe o erro no console se a consulta falhar.
-            console.log("Erro ao listar clientes:", error);  
-            // Retorna null se ocorrer algum erro na consulta.
-            return null;  
+            return lista;
+        } catch (error) {
+            console.log("Erro ao listar clientes:", error);
+            return null;
         }
     }
 }

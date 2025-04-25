@@ -1,63 +1,105 @@
 // Importa a classe DataBaseModel, que gerencia a conexão com o banco de dados.
-import { DataBaseModel } from "./DataBaseModel";  
+import { DataBaseModel } from "./DataBaseModel";
 
 // Cria uma instância do DataBaseModel e acessa o pool de conexões ao banco de dados.
-const database = new DataBaseModel().pool;  
+const database = new DataBaseModel().pool;
 
-// Define a classe 'Sessao', que modela os dados de uma sessão de cinema no sistema.
-export class Sessao {  
-    // Declara as propriedades privadas da classe 'Sessao', que representam as informações de uma sessão.
-    private idSessao: number = 0;  
-    private idFilme: number;  
-    private idSala: number;  
-    private dataHoraInicio: string;  
-    private dataHoraFim: string;  
+/**
+ * Classe que representa uma Sessão de cinema no sistema.
+ */
+export class Sessao {
 
-    // Construtor da classe 'Sessao', inicializa as propriedades com os valores passados ao instanciar o objeto.
-    constructor(idFilme: number, idSala: number, dataHoraInicio: string, dataHoraFim: string) {  
-        this.idFilme = idFilme;  
-        this.idSala = idSala;  
-        this.dataHoraInicio = dataHoraInicio;  
-        this.dataHoraFim = dataHoraFim;  
+    // Propriedades privadas da Sessão
+    private idSessao: number = 0;
+    private idFilme: number;
+    private idSala: number;
+    private horario: string;
+    private data: string;
+
+    /**
+     * Construtor da classe Sessao
+     * 
+     * @param idFilme ID do filme que será exibido na sessão
+     * @param idSala ID da sala onde a sessão ocorrerá
+     * @param horario Horário da sessão
+     * @param data Data da sessão
+     */
+    constructor(idFilme: number, idSala: number, horario: string, data: string) {
+        this.idFilme = idFilme;
+        this.idSala = idSala;
+        this.horario = horario;
+        this.data = data;
     }
 
-    // Método para definir o id da sessão. É utilizado para atribuir um valor à propriedade 'idSessao'.
-    public setIdSessao(id: number): void {  
-        this.idSessao = id;  
+    // Getters e Setters
+
+    public getIdSessao(): number {
+        return this.idSessao;
     }
 
-    // Método estático assíncrono que retorna uma lista de objetos 'Sessao' a partir dos dados no banco de dados.
-    static async listarSessoes(): Promise<Array<Sessao> | null> {  
-        const lista: Array<Sessao> = [];  // Cria um array vazio para armazenar as sessões.
+    public setIdSessao(id: number): void {
+        this.idSessao = id;
+    }
 
-        try {  
-            // Define a consulta SQL para buscar todas as sessões da tabela 'Sessao'.
-            const query = `SELECT * FROM Sessao;`;  
-            // Executa a consulta e espera pela resposta.
+    public getIdFilme(): number {
+        return this.idFilme;
+    }
+
+    public setIdFilme(idFilme: number): void {
+        this.idFilme = idFilme;
+    }
+
+    public getIdSala(): number {
+        return this.idSala;
+    }
+
+    public setIdSala(idSala: number): void {
+        this.idSala = idSala;
+    }
+
+    public getHorario(): string {
+        return this.horario;
+    }
+
+    public setHorario(horario: string): void {
+        this.horario = horario;
+    }
+
+    public getData(): string {
+        return this.data;
+    }
+
+    public setData(data: string): void {
+        this.data = data;
+    }
+
+    /**
+     * Método estático que lista todas as sessões cadastradas no banco de dados.
+     * 
+     * @returns Uma lista de objetos do tipo Sessao ou null em caso de erro.
+     */
+    static async listarSessoes(): Promise<Array<Sessao> | null> {
+        const lista: Array<Sessao> = [];
+
+        try {
+            const query = `SELECT * FROM Sessao;`;
             const resposta = await database.query(query);
 
-            // Itera sobre cada linha da resposta do banco de dados.
-            resposta.rows.forEach((linha: any) => {  
-                // Cria um novo objeto 'Sessao' a partir dos dados da linha.
+            resposta.rows.forEach((linha: any) => {
                 const sessao = new Sessao(
                     linha.id_filme,
                     linha.id_sala,
-                    linha.data_hora_inicio,
-                    linha.data_hora_fim
+                    linha.horario,
+                    linha.data
                 );
-                // Atribui o id_sessao à instância do objeto 'Sessao'.
-                sessao.setIdSessao(linha.id_sessao);  
-                // Adiciona a sessão à lista.
-                lista.push(sessao);  
+                sessao.setIdSessao(linha.id_sessao);
+                lista.push(sessao);
             });
 
-            // Retorna a lista de sessões.
-            return lista;  
-        } catch (error) {  
-            // Exibe o erro no console se a consulta falhar.
-            console.log("Erro ao listar sessões:", error);  
-            // Retorna null se ocorrer algum erro na consulta.
-            return null;  
+            return lista;
+        } catch (error) {
+            console.log("Erro ao listar sessões:", error);
+            return null;
         }
     }
 }
