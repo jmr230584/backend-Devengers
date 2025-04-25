@@ -84,3 +84,10 @@ INSERT INTO Ingresso (id_sessao, id_cliente, status_ingresso, preco_ingresso) VA
 (3, 3, 'Confirmado', 30.00),
 (4, 4, 'Pendente', 35.00),
 (5, 5, 'Confirmado', 40.00);
+
+-- Arrumando o erro de disponibilidade
+ALTER TABLE Filme
+ADD disponibilidade VARCHAR(20);
+UPDATE Filme SET disponibilidade = 'Disponível' WHERE disponibilidade IS NULL;
+ALTER TABLE Filme
+ALTER COLUMN disponibilidade SET NOT NULL;
