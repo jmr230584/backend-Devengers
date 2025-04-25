@@ -46,7 +46,7 @@ export class Sala {
     }
 
     //setters 
-    
+
     public setNumeroSala(numero: number): void {
         this.numeroSala = numero;
     }
@@ -71,6 +71,7 @@ export class Sala {
         return this.fileira;
     }
 
+    
     public setFileira(fileira: number): void {
         this.fileira = fileira;
     }

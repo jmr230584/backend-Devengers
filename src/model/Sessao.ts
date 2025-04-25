@@ -72,6 +72,7 @@ export class Sessao {
     public setData(data: string): void {
         this.data = data;
     }
+    
 
     /**
      * Método estático que lista todas as sessões cadastradas no banco de dados.

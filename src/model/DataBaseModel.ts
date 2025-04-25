@@ -12,6 +12,7 @@ dotenv.config();
  */
 export class DataBaseModel {  
     
+    
     /**
      * Configuração para conexão com o banco de dados
      */

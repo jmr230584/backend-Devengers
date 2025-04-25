@@ -39,7 +39,7 @@ export class Cliente {
     public getIdCliente(): number {
         return this.idCliente;
     }
-    
+
 
     public setIdCliente(id: number): void {
         this.idCliente = id;
@@ -72,6 +72,7 @@ export class Cliente {
     public getCpf(): string {
         return this.cpf;
     }
+    
 
     public setCpf(cpf: string): void {
         this.cpf = cpf;
