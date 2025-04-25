@@ -4,8 +4,12 @@ import { DataBaseModel } from "./DataBaseModel";
 // Cria uma instância do DataBaseModel para acessar o pool de conexões.
 const database = new DataBaseModel().pool;
 
+/**
+ * Classe que representa um Filme no sistema.
+ */
 export class Filme {
-    // Define as propriedades privadas da classe 'Filme', incluindo a nova propriedade 'disponibilidade'.
+
+    // Propriedades privadas do Filme
     private idFilme: number = 0;
     private titulo: string;
     private sinopse: string;
@@ -14,9 +18,20 @@ export class Filme {
     private genero: string;
     private anoLancamento: number;
     private posterFilme: string;
-    private disponibilidade: string; // Nova propriedade para disponibilidade
+    private disponibilidade: string;
 
-    // Construtor da classe 'Filme', agora inclui o campo 'disponibilidade'.
+    /**
+     * Construtor da classe Filme
+     * 
+     * @param titulo Título do filme
+     * @param sinopse Sinopse do filme
+     * @param duracao Duração do filme
+     * @param classificacaoEtaria Classificação etária do filme
+     * @param genero Gênero do filme
+     * @param anoLancamento Ano de lançamento do filme
+     * @param posterFilme URL do poster do filme
+     * @param disponibilidade Status de disponibilidade
+     */
     constructor(
         titulo: string,
         sinopse: string,
@@ -25,7 +40,7 @@ export class Filme {
         genero: string,
         anoLancamento: number,
         posterFilme: string,
-        disponibilidade: string // Adicionando 'disponibilidade' ao construtor
+        disponibilidade: string
     ) {
         this.titulo = titulo;
         this.sinopse = sinopse;
@@ -34,49 +49,94 @@ export class Filme {
         this.genero = genero;
         this.anoLancamento = anoLancamento;
         this.posterFilme = posterFilme;
-        this.disponibilidade = disponibilidade; // Inicializa a propriedade de disponibilidade
+        this.disponibilidade = disponibilidade;
     }
 
-    // Método para definir o id do filme.
-    public setIdFilme(id: number): void {
-        this.idFilme = id;
-    }
+    // Getters e Setters
 
-    // Método para obter o id do filme.
     public getIdFilme(): number {
         return this.idFilme;
     }
 
-    // Método para obter a disponibilidade do filme.
+    public setIdFilme(id: number): void {
+        this.idFilme = id;
+    }
+
+    public getTitulo(): string {
+        return this.titulo;
+    }
+
+    public setTitulo(titulo: string): void {
+        this.titulo = titulo;
+    }
+
+    public getSinopse(): string {
+        return this.sinopse;
+    }
+
+    public setSinopse(sinopse: string): void {
+        this.sinopse = sinopse;
+    }
+
+    public getDuracao(): string {
+        return this.duracao;
+    }
+
+    public setDuracao(duracao: string): void {
+        this.duracao = duracao;
+    }
+
+    public getClassificacaoEtaria(): string {
+        return this.classificacaoEtaria;
+    }
+
+    public setClassificacaoEtaria(classificacao: string): void {
+        this.classificacaoEtaria = classificacao;
+    }
+
+    public getGenero(): string {
+        return this.genero;
+    }
+
+    public setGenero(genero: string): void {
+        this.genero = genero;
+    }
+
+    public getAnoLancamento(): number {
+        return this.anoLancamento;
+    }
+
+    public setAnoLancamento(ano: number): void {
+        this.anoLancamento = ano;
+    }
+
+    public getPosterFilme(): string {
+        return this.posterFilme;
+    }
+
+    public setPosterFilme(poster: string): void {
+        this.posterFilme = poster;
+    }
+
     public getDisponibilidade(): string {
         return this.disponibilidade;
     }
 
-    // Método para converter a instância de 'Filme' em um objeto JSON.
-    public toJSON() {
-        return {
-            idFilme: this.idFilme,
-            titulo: this.titulo,
-            sinopse: this.sinopse,
-            duracao: this.duracao,
-            classificacaoEtaria: this.classificacaoEtaria,
-            genero: this.genero,
-            anoLancamento: this.anoLancamento,
-            posterFilme: this.posterFilme,
-            disponibilidade: this.disponibilidade // Inclui a disponibilidade no JSON
-        };
+    public setDisponibilidade(disponibilidade: string): void {
+        this.disponibilidade = disponibilidade;
     }
 
-    // Método estático assíncrono para listar todos os filmes do banco de dados.
+    /**
+     * Lista todos os filmes cadastrados no banco de dados.
+     * @returns Lista de filmes ou null em caso de erro.
+     */
     static async listarFilmes(): Promise<Array<Filme> | null> {
-        const lista: Array<Filme> = []; // Cria um array vazio para armazenar os filmes.
+        const lista: Array<Filme> = [];
 
         try {
-            // Consulta SQL para selecionar todos os filmes da tabela 'filme'.
             const query = `SELECT * FROM filme;`;
-            const resposta = await database.query(query); // Executa a consulta no banco.
+            const resposta = await database.query(query);
 
-            // Para cada linha retornada pelo banco, cria uma instância de Filme e adiciona à lista.
             resposta.rows.forEach((linha: any) => {
                 const filme = new Filme(
                     linha.titulo,
@@ -86,17 +146,16 @@ export class Filme {
                     linha.genero,
                     linha.ano_lancamento,
                     linha.poster_filme,
-                    linha.disponibilidade // Adiciona o valor de disponibilidade retornado pelo banco.
+                    linha.disponibilidade
                 );
-                filme.setIdFilme(linha.id_filme); // Define o id do filme.
-                lista.push(filme); // Adiciona o filme à lista.
+                filme.setIdFilme(linha.id_filme);
+                lista.push(filme);
             });
 
-            // Retorna a lista de filmes.
             return lista;
         } catch (error) {
-            console.log("Erro ao listar filmes:", error); // Caso ocorra erro, exibe no console.
-            return null; // Retorna null em caso de erro.
+            console.log("Erro ao listar filmes:", error);
+            return null;
         }
     }
 }
