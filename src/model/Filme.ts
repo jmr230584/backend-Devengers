@@ -157,5 +157,6 @@ export class Filme {
             console.log("Erro ao listar filmes:", error);
             return null;
         }
+        
     }
 }

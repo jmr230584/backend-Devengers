@@ -39,6 +39,7 @@ export class Cliente {
     public getIdCliente(): number {
         return this.idCliente;
     }
+    
 
     public setIdCliente(id: number): void {
         this.idCliente = id;
