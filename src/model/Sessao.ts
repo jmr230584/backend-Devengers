@@ -13,8 +13,8 @@ export class Sessao {
     private idSessao: number = 0;
     private idFilme: number;
     private idSala: number;
-    private horario: string;
-    private data: string;
+    private DataHoraInicio: number;
+    private DataHoraFim: number;
 
     /**
      * Construtor da classe Sessao
@@ -24,11 +24,11 @@ export class Sessao {
      * @param horario Horário da sessão
      * @param data Data da sessão
      */
-    constructor(idFilme: number, idSala: number, horario: string, data: string) {
+    constructor(idFilme: number, idSala: number, DataHoraInicio: number, DataHoraFim: number) {
         this.idFilme = idFilme;
         this.idSala = idSala;
-        this.horario = horario;
-        this.data = data;
+        this.DataHoraInicio = DataHoraInicio;
+        this.DataHoraFim = DataHoraFim;
     }
 
     // Getters e Setters
@@ -57,20 +57,20 @@ export class Sessao {
         this.idSala = idSala;
     }
 
-    public getHorario(): string {
-        return this.horario;
+    public getDataHoraInicio(): number {
+        return this.DataHoraInicio;
     }
 
-    public setHorario(horario: string): void {
-        this.horario = horario;
+    public setdDtaHoraInicio(DataHoraInicio: number): void {
+        this.DataHoraInicio = DataHoraInicio;
     }
 
-    public getData(): string {
-        return this.data;
+    public getDataHoraFim(): number {
+        return this.DataHoraFim;
     }
 
-    public setData(data: string): void {
-        this.data = data;
+    public setDataHoraFim(DataHoraFim: number): void {
+        this.DataHoraFim = DataHoraFim;
     }
     
 
@@ -90,7 +90,7 @@ export class Sessao {
                 const sessao = new Sessao(
                     linha.id_filme,
                     linha.id_sala,
-                    linha.horario,
+                    linha.DataHoraInicio,
                     linha.data
                 );
                 sessao.setIdSessao(linha.id_sessao);
@@ -106,12 +106,12 @@ export class Sessao {
     static async cadastrarSessao(sessao: Sessao): Promise<boolean> {
         try {
             const queryInsertSessao = `
-                INSERT INTO Sessao (id_filme, id_sala, horario, data)
+                INSERT INTO Sessao (id_filme, id_sala,data_hora_inicio, data_hora_fim)
                 VALUES (
                     ${sessao.getIdFilme()},
                     ${sessao.getIdSala()},
-                    '${sessao.getHorario()}',
-                    '${sessao.getData()}'
+                    '${sessao.getDataHoraInicio()}',
+                    '${sessao.getDataHoraFim()}'
                 )
                 RETURNING id_sessao;
             `;

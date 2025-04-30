@@ -6,6 +6,7 @@ import { SalaController } from "./controller/SalaController";
 import { SessaoController } from "./controller/SessaoController";  
 import { ClienteController } from "./controller/ClienteController";  
 import { IngressoController } from "./controller/IngressoController";  
+import { SERVER_ROUTES } from "./appConfig";
 
 // Cria uma instância do roteador para definir as rotas da API.
 const router = Router();  
@@ -22,33 +23,38 @@ router.get("/", (req: Request, res: Response) => {
  * ROTAS PARA FILME
  * Define a rota para listar todos os filmes. Quando acessada via GET, chama o método 'todos' do FilmeController.
  */
-router.get("/lista/filmes", FilmeController.todos);  
+router.get(SERVER_ROUTES.LISTAR_FILME, FilmeController.todos);  
+router.post(SERVER_ROUTES.CADASTRAR_FILME, FilmeController.cadastrar);
 
 /**
  *  ROTAS PARA SALA
  * Define a rota para listar todas as salas. Quando acessada via GET, chama o método 'todos' do SalaController.
  */
-router.get("/lista/salas", SalaController.todos);  
+router.get(SERVER_ROUTES.LISTAR_SALA, SalaController.todos);  
+router.post(SERVER_ROUTES.CADASTRAR_SALA, SalaController.cadastrar);
 
 /**
  *  ROTAS PARA SESSAO
  * Define a rota para listar todas as sessões. Quando acessada via GET, chama o método 'todos' do SessaoController.
  */
-router.get("/lista/sessoes", SessaoController.todos);  
+router.get(SERVER_ROUTES.LISTAR_SESSAO, SessaoController.todos);  
+router.post(SERVER_ROUTES.CADASTRAR_SESSAO, SessaoController.cadastrar);
 
 /**
  *  ROTAS PARA CLIENTE
  * Define a rota para listar todos os clientes. Quando acessada via GET, chama o método 'todos' do ClienteController.
  */
-router.get("/lista/clientes", ClienteController.todos);  
+router.get(SERVER_ROUTES.LISTAR_CLIENTES, ClienteController.todos);  
+router.post(SERVER_ROUTES.CADASTRAR_CLIENTE, ClienteController.cadastrar);
 
 /**
  * ROTAS PARA INGRESSO
  * Define a rota para listar todos os ingressos. Quando acessada via GET, chama o método 'todos' do IngressoController.
  */
-router.get("/lista/ingressos", IngressoController.todos);  
+router.get(SERVER_ROUTES.LISTAR_INGRESSO, IngressoController.todos);  
+router.get(SERVER_ROUTES.CADASTRAR_INGRESSO, IngressoController.cadastrar);
 
 /**
  * Exporta o roteador para ser usado em outras partes da aplicação.
  */
-export { router };  
+export { router };   

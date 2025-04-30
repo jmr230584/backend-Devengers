@@ -9,7 +9,7 @@ interface ClienteDTO{
     email: string;
     senha: string;
     cpf: number;
-    celular: string;
+    celular: string
 }
 
 // Declara a classe 'ClienteController', que herda de 'Cliente', permitindo acesso aos métodos e propriedades da classe 'Cliente'.
@@ -31,4 +31,34 @@ export class ClienteController extends Cliente {
             return res.status(400).json({ mensagem: "Não foi possível listar os clientes." });  
         }
     }
+
+    static async cadastrar(req: Request, res: Response): Promise<any>{
+        try {
+            // Desestruturando objeto recebido do front-end
+            const dadosRecebidos: ClienteDTO = req.body;
+            
+            // Instanciando objeto Cliente
+            const novoCliente = new Cliente(
+                dadosRecebidos.nomeCompleto,
+                dadosRecebidos.email ?? '',
+                dadosRecebidos.senha,
+                dadosRecebidos.cpf,
+                dadosRecebidos.celular
+            );
+
+            // Chama o método de persistência no banco
+            const result = await Cliente.cadastrarCliente(novoCliente);
+    
+            // Verifica o resultado da operação
+            if (result) {
+                return res.status(200).json('Cliente cadastrado com sucesso');
+            } else {
+                return res.status(400).json('Não foi possível cadastrar o cliente no banco de dados');
+            }
+        } catch (error) {
+            console.error(`Erro ao cadastrar o cliente: ${error}`);
+            return res.status(400).json('Erro ao cadastrar o cliente');
+        }
+    }
+
 }

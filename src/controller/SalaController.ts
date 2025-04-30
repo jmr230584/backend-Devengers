@@ -30,4 +30,32 @@ export class SalaController extends Sala {
             return res.status(400).json({ mensagem: "Não foi possível listar as salas." });  
         }
     }
+
+    static async cadastrar(req: Request, res: Response): Promise<any> {
+        try {
+            // Desestruturando objeto recebido do front-end
+            const dadosRecebidos: SalaDTO = req.body;
+    
+            // Instanciando objeto Sala
+            const novaSala = new Sala(
+                dadosRecebidos.numeroSala,
+                dadosRecebidos.tipoSala ?? '',
+                dadosRecebidos.numeroAssento ?? 0,
+                dadosRecebidos.fileira ?? 0
+            );
+    
+            // Chama o método de persistência no banco
+            const result = await Sala.cadastrarSala(novaSala);
+    
+            // Verifica o resultado da operação
+            if (result) {
+                return res.status(200).json('Sala cadastrada com sucesso');
+            } else {
+                return res.status(400).json('Não foi possível cadastrar a sala no banco de dados');
+            }
+        } catch (error) {
+            console.error(`Erro ao cadastrar a sala: ${error}`);
+            return res.status(400).json('Erro ao cadastrar a sala');
+        }
+    }
 }

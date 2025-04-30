@@ -16,6 +16,8 @@ interface FilmeDTO{
 }
 
 export class FilmeController extends Filme {
+    
+    
     // Método estático para listar todos os filmes da base de dados.
     static async todos(req: Request, res: Response): Promise<any> {
         try {
@@ -26,6 +28,45 @@ export class FilmeController extends Filme {
             console.log("Erro na controller de Filme:", error); // Exibe o erro no console para depuração.
             // Retorna um erro com status HTTP 400 e uma mensagem de erro no formato JSON.
             return res.status(400).json({ mensagem: "Falha ao listar filmes." });
+        }
+    }
+    
+     /**
+     * Cadastra um novo aluno.
+     * @param req Objeto de requisição HTTP com os dados do aluno.
+     * @param res Objeto de resposta HTTP.
+     * @returns Mensagem de sucesso ou erro em formato JSON.
+     */
+
+     static async cadastrar(req: Request, res: Response): Promise<any> {
+        try {
+            // Desestruturando objeto recebido do front-end
+            const dadosRecebidos: FilmeDTO = req.body;
+    
+            // Instanciando objeto Filme
+            const novoFilme = new Filme(
+                dadosRecebidos.titulo,
+                dadosRecebidos.sinopse ?? '',
+                dadosRecebidos.duracao ?? '',
+                dadosRecebidos.classificacaoEtaria ?? '',
+                dadosRecebidos.genero ?? '',
+                dadosRecebidos.anoLancamento ?? 1900,
+                dadosRecebidos.posterFilme ?? '',
+                dadosRecebidos.disponibilidade ?? 'INDISPONIVEL'
+            );
+    
+            // Chama o método de persistência no banco
+            const result = await Filme.cadastrarFilme(novoFilme);
+    
+            // Verifica o resultado da operação
+            if (result) {
+                return res.status(200).json('Filme cadastrado com sucesso');
+            } else {
+                return res.status(400).json('Não foi possível cadastrar o filme no banco de dados');
+            }
+        } catch (error) {
+            console.error(`Erro ao cadastrar o filme: ${error}`);
+            return res.status(400).json('Erro ao cadastrar o filme');
         }
     }
     

@@ -7,8 +7,8 @@ import { Sessao } from "../model/Sessao";
 interface SessaoDTO{
     idFilme: number;
     idSala: number;
-    dataHoraInicio: string;
-    dataHoraFim: string;
+    dataHoraInicio: number;
+    dataHoraFim: number;
 }
 
 // Declara a classe 'SessaoController', que herda de 'Sessao', permitindo acesso aos métodos e propriedades da classe 'Sessao'.
@@ -29,5 +29,32 @@ export class SessaoController extends Sessao {
             // Retorna uma resposta com status HTTP 400 (Bad Request) e uma mensagem de erro no formato JSON.
             return res.status(400).json({ mensagem: "Não foi possível listar as sessões." });  
         }
+    }
+    static async cadastrar(req: Request, res: Response): Promise<any> {
+        try {
+            // Desestruturando objeto recebido do front-end
+            const dadosRecebidos: SessaoDTO = req.body;
+    
+            // Instanciando objeto Sessao
+            const novaSessao = new Sessao(
+                dadosRecebidos.idFilme,
+                dadosRecebidos.idSala,
+                dadosRecebidos.dataHoraInicio ?? '',
+                dadosRecebidos.dataHoraFim ?? ''
+            );
+    
+            // Chama o método de persistência no banco
+            const result = await Sessao.cadastrarSessao(novaSessao);
+    
+            // Verifica o resultado da operação
+            if (result) {
+                return res.status(200).json('Sessão cadastrada com sucesso');
+            } else {
+                return res.status(400).json('Não foi possível cadastrar a sessão no banco de dados');
+            }
+        } catch (error) {
+            console.error(`Erro ao cadastrar a sessão: ${error}`);
+            return res.status(400).json('Erro ao cadastrar a sessão');
+            }
     }
 }

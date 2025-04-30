@@ -14,7 +14,7 @@ export class Cliente {
     private nomeCompleto: string;
     private email: string;
     private senha: string;
-    private cpf: string;
+    private cpf: number;
     private celular: string;
 
     /**
@@ -26,7 +26,7 @@ export class Cliente {
      * @param cpf CPF do cliente
      * @param celular Celular do cliente
      */
-    constructor(nomeCompleto: string, email: string, senha: string, cpf: string, celular: string) {
+    constructor(nomeCompleto: string, email: string, senha: string, cpf: number, celular: string) {
         this.nomeCompleto = nomeCompleto;
         this.email = email;
         this.senha = senha;
@@ -69,12 +69,12 @@ export class Cliente {
         this.senha = senha;
     }
 
-    public getCpf(): string {
+    public getCpf(): number {
         return this.cpf;
     }
-    
 
-    public setCpf(cpf: string): void {
+
+    public setCpf(cpf: number): void {
         this.cpf = cpf;
     }
 
@@ -115,27 +115,27 @@ export class Cliente {
             return null;
         }
     }
-    static async cadastrarCliete(cliente: Cliente): Promise<Boolean> {      
+    static async cadastrarCliente(cliente: Cliente): Promise<Boolean> {      
         try {
             // Cria a consulta (query) para inserir o registro de um  no banco de dados, retorna o ID do aluno que foi criado no final
             const queryInsertCliente = `
-                INSERT INTO Aluno (nome_completo, email, senha, cpf, celular)
+                INSERT INTO Cliente (nome_completo, email, senha, cpf, celular)
                 VALUES (
                     '${cliente.getNomeCompleto().toUpperCase()}',
                     '${cliente.getEmail().toUpperCase()}',
                     '${cliente.getSenha()}',
-                    '${cliente.getCpf().toUpperCase()}',
-                    '${cliente.getCelular().toLowerCase()}',
+                    '${cliente.getCpf()}',
+                    '${cliente.getCelular().toLowerCase()}'
                 )
                 RETURNING id_cliente;`;
 
             // Executa a query no banco de dados e armazena o resultado
-            const result = await database.query(queryInsertCliente);
+            const resultBD = await database.query(queryInsertCliente);
 
             // verifica se a quantidade de linhas que foram alteradas é maior que 0
-            if (result.rows.length > 0) {
+            if (resultBD.rows.length > 0) {
                 // Exibe a mensagem de sucesso
-                console.log(`Cliente cadastrado com sucesso. ID: ${result.rows[0].id_cliente}`);
+                console.log(`Cliente cadastrado com sucesso. ID: ${resultBD.rows[0].id_cliente}`);
                 // retorna verdadeiro
                 return true;
             }

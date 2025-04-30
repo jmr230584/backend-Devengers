@@ -30,4 +30,32 @@ export class IngressoController extends Ingresso {
             return res.status(400).json({ mensagem: "Não foi possível listar os ingressos." });  
         }
     }
+
+    static async cadastrar(req: Request, res: Response): Promise<any> {
+        try {
+            // Desestruturando objeto recebido do front-end
+            const dadosRecebidos: IngressoDTO = req.body;
+    
+            // Instanciando objeto Ingresso
+            const novoIngresso = new Ingresso(
+                dadosRecebidos.idSessao,
+                dadosRecebidos.idCliente,
+                dadosRecebidos.statusIngresso ?? 'PENDENTE',
+                dadosRecebidos.precoIngresso ?? 0
+            );
+    
+            // Chama o método de persistência no banco
+            const result = await Ingresso.cadastrarIngresso(novoIngresso);
+    
+            // Verifica o resultado da operação
+            if (result) {
+                return res.status(200).json('Ingresso cadastrado com sucesso');
+            } else {
+                return res.status(400).json('Não foi possível cadastrar o ingresso no banco de dados');
+            }
+        } catch (error) {
+            console.error(`Erro ao cadastrar o ingresso: ${error}`);
+            return res.status(400).json('Erro ao cadastrar o ingresso');
+        }
+    }
 }
