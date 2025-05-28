@@ -39,9 +39,9 @@ export class SalaController extends Sala {
             // Instanciando objeto Sala
             const novaSala = new Sala(
                 dadosRecebidos.numeroSala,
-                dadosRecebidos.tipoSala ?? '',
-                dadosRecebidos.numeroAssento ?? 0,
-                dadosRecebidos.fileira ?? 0
+                dadosRecebidos.tipoSala,
+                dadosRecebidos.numeroAssento,
+                dadosRecebidos.fileira
             );
     
             // Chama o método de persistência no banco

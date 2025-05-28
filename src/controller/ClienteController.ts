@@ -40,7 +40,7 @@ export class ClienteController extends Cliente {
             // Instanciando objeto Cliente
             const novoCliente = new Cliente(
                 dadosRecebidos.nomeCompleto,
-                dadosRecebidos.email ?? '',
+                dadosRecebidos.email,
                 dadosRecebidos.senha,
                 dadosRecebidos.cpf,
                 dadosRecebidos.celular

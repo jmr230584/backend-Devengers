@@ -90,12 +90,14 @@ export class Sessao {
                 const sessao = new Sessao(
                     linha.id_filme,
                     linha.id_sala,
-                    linha.dataHoraInicio,
-                    linha.dataHoraFim
+                    linha.data_hora_inicio,
+                    linha.data_hora_fim
                 );
                 sessao.setIdSessao(linha.id_sessao);
                 lista.push(sessao);
             });
+
+            console.log(lista)
 
             return lista;
         } catch (error) {
@@ -106,7 +108,7 @@ export class Sessao {
     static async cadastrarSessao(sessao: Sessao): Promise<boolean> {
         try {
             const queryInsertSessao = `
-                INSERT INTO Sessao (id_filme, id_sala,data_hora_inicio, data_hora_fim)
+                INSERT INTO Sessao (id_filme, id_sala, data_hora_inicio, data_hora_fim)
                 VALUES (
                     ${sessao.getIdFilme()},
                     ${sessao.getIdSala()},

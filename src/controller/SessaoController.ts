@@ -39,8 +39,8 @@ export class SessaoController extends Sessao {
             const novaSessao = new Sessao(
                 dadosRecebidos.idFilme,
                 dadosRecebidos.idSala,
-                dadosRecebidos.dataHoraInicio ?? '',
-                dadosRecebidos.dataHoraFim ?? ''
+                dadosRecebidos.dataHoraInicio,
+                dadosRecebidos.dataHoraFim
             );
     
             // Chama o método de persistência no banco
