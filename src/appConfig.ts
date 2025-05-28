@@ -3,7 +3,9 @@ const SERVER_ROUTES = {
     // Rota para listar os clientes.
     LISTAR_CLIENTES: '/lista/cliente',  
     // Rota para cadastrar um cliente.
-    CADASTRAR_CLIENTE: '/cadastro/cliente',  
+    CADASTRAR_CLIENTE: '/cadastro/cliente',
+    //Rota para atualizar um cliente.
+    ATUALIZAR_CLIENTE: '/atualizar/cliente',  
 
 
     // Rota para listar os ingressos.

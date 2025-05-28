@@ -61,4 +61,42 @@ export class ClienteController extends Cliente {
         }
     }
 
+        /**
+     * Método para atualizar o cadastro de um cliente.
+     * 
+     * @param req Objeto de requisição do Express, contendo os dados atualizados do cliente
+     * @param res Objeto de resposta do Express
+     * @returns Retorna uma resposta HTTP indicando sucesso ou falha na atualização
+     */
+        static async atualizar(req: Request, res: Response): Promise<any> {
+            try {
+                // Desestruturando objeto recebido pelo front-end
+                const dadosRecebidos: ClienteDTO = req.body;
+                
+                // Instanciando objeto Cliente
+                const cliente = new Cliente(
+                    dadosRecebidos.nomeCompleto,
+                    dadosRecebidos.email,
+                    dadosRecebidos.senha,
+                    dadosRecebidos.cpf,
+                    dadosRecebidos.celular              
+                );
+    
+                // Define o ID do Cliente, que deve ser passado na query string
+                cliente.setIdCliente(parseInt(req.query.idCliente as string));
+    
+                // Chama o método para atualizar o cadastro do Cliente no banco de dados
+                if (await Cliente.atualizarCliente(cliente)) {
+                    return res.status(200).json({ mensagem: "Cadastro atualizado com sucesso!" });
+                } else {
+                    return res.status(400).json('Não foi possível atualizar o Cliente no banco de dados');
+                }
+            } catch (error) {
+                // Caso ocorra algum erro, este é registrado nos logs do servidor
+                console.error(`Erro no modelo: ${error}`);
+                // Retorna uma resposta com uma mensagem de erro
+                return res.json({ mensagem: "Erro ao atualizar Cliente." });
+            }
+        }
+
 }
