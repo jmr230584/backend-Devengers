@@ -39,6 +39,7 @@ router.post(SERVER_ROUTES.CADASTRAR_SALA, SalaController.cadastrar);
  */
 router.get(SERVER_ROUTES.LISTAR_SESSAO, SessaoController.todos);  
 router.post(SERVER_ROUTES.CADASTRAR_SESSAO, SessaoController.cadastrar);
+router.delete(SERVER_ROUTES.DELETAR_SESSAO, SessaoController.deletar);
 
 /**
  *  ROTAS PARA CLIENTE

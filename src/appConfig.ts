@@ -15,6 +15,8 @@ const SERVER_ROUTES = {
     LISTAR_SESSAO: '/lista/sessao',  
     // Rota para cadastrar uma sessão de cinema.
     CADASTRAR_SESSAO: '/cadastro/sessao',  
+    // rota para deletar uma sessão de cinema
+    DELETAR_SESSAO: '/deletar/sessao',
 
     // Rota para listar os filmes.
     LISTAR_FILME: '/lista/filme',  
