@@ -97,6 +97,8 @@ export class Sessao {
                 lista.push(sessao);
             });
 
+            console.log(lista)
+
             return lista;
         } catch (error) {
             console.log("Erro ao listar sessões:", error);
@@ -106,7 +108,7 @@ export class Sessao {
     static async cadastrarSessao(sessao: Sessao): Promise<boolean> {
         try {
             const queryInsertSessao = `
-                INSERT INTO Sessao (id_filme, id_sala,data_hora_inicio, data_hora_fim)
+                INSERT INTO Sessao (id_filme, id_sala, data_hora_inicio, data_hora_fim)
                 VALUES (
                     ${sessao.getIdFilme()},
                     ${sessao.getIdSala()},

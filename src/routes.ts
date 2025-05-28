@@ -47,6 +47,7 @@ router.delete(SERVER_ROUTES.DELETAR_SESSAO, SessaoController.deletar);
  */
 router.get(SERVER_ROUTES.LISTAR_CLIENTES, ClienteController.todos);  
 router.post(SERVER_ROUTES.CADASTRAR_CLIENTE, ClienteController.cadastrar);
+router.put(SERVER_ROUTES.ATUALIZAR_CLIENTE, ClienteController.atualizar);
 
 /**
  * ROTAS PARA INGRESSO

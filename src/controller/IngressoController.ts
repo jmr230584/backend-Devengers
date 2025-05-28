@@ -40,8 +40,8 @@ export class IngressoController extends Ingresso {
             const novoIngresso = new Ingresso(
                 dadosRecebidos.idSessao,
                 dadosRecebidos.idCliente,
-                dadosRecebidos.statusIngresso ?? 'PENDENTE',
-                dadosRecebidos.precoIngresso ?? 0
+                dadosRecebidos.statusIngresso,
+                dadosRecebidos.precoIngresso
             );
     
             // Chama o método de persistência no banco

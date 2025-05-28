@@ -46,13 +46,13 @@ export class FilmeController extends Filme {
             // Instanciando objeto Filme
             const novoFilme = new Filme(
                 dadosRecebidos.titulo,
-                dadosRecebidos.sinopse ?? '',
-                dadosRecebidos.duracao ?? '',
-                dadosRecebidos.classificacaoEtaria ?? '',
-                dadosRecebidos.genero ?? '',
-                dadosRecebidos.anoLancamento ?? 1900,
-                dadosRecebidos.posterFilme ?? '',
-                dadosRecebidos.disponibilidade ?? 'INDISPONIVEL'
+                dadosRecebidos.sinopse,
+                dadosRecebidos.duracao,
+                dadosRecebidos.classificacaoEtaria,
+                dadosRecebidos.genero,
+                dadosRecebidos.anoLancamento,
+                dadosRecebidos.posterFilme,
+                dadosRecebidos.disponibilidade
             );
     
             // Chama o método de persistência no banco
