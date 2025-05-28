@@ -58,4 +58,25 @@ export class SalaController extends Sala {
             return res.status(400).json('Erro ao cadastrar a sala');
         }
     }
+
+    static async deletar(req: Request, res: any) {
+            try {
+              const idSala = parseInt(req.query.idSala as string);
+        
+              if (isNaN(idSala)) {
+                return res.status(400).json("ID inválido");
+              }
+        
+              const resultado = await Sala.deletarSala(idSala);
+        
+              if (resultado) {
+                return res.status(200).json("Sala deletada com sucesso");
+              } else {
+                return res.status(404).json(resultado);
+              }
+            } catch (error) {
+              console.error("Erro ao deletar sala:", error);
+              return res.status(500).json("Erro no servidor ao deletar sala");
+            }
+    }
 }

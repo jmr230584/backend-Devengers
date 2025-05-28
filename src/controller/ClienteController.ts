@@ -99,4 +99,25 @@ export class ClienteController extends Cliente {
             }
         }
 
+        static async deletar(req: Request, res: any) {
+                    try {
+                      const idCliente = parseInt(req.query.idFilme as string);
+                
+                      if (isNaN(idCliente)) {
+                        return res.status(400).json("ID inválido");
+                      }
+                
+                      const resultado = await Cliente.deletarCliente(idCliente);
+                
+                      if (resultado) {
+                        return res.status(200).json("Cliente deletado com sucesso");
+                      } else {
+                        return res.status(404).json(resultado);
+                      }
+                    } catch (error) {
+                      console.error("Erro ao deletar cliente:", error);
+                      return res.status(500).json("Erro no servidor ao deletar cliente");
+                    }
+            }
+
 }

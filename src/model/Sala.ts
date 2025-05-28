@@ -132,6 +132,36 @@ export class Sala {
         }
     }
     
+     static async deletarSala(idSala: number): Promise<Boolean> {
+    // variável para controle de resultado da consulta (query)
+    let queryResult = false;
+
+    try {// Cria a consulta (query) para remover a Sala
+
+            // Construção da query SQL para deletar o Sala.
+            const queryDeleteSala = `UPDATE Sala
+                                        SET status_sala = FALSE
+                                            WHERE id_Sala=${idSala};`;
+
+            // Executa a query de exclusão e verifica se a operação foi bem-sucedida.
+            await database.query(queryDeleteSala)
+            .then((result) => {
+                if (result.rowCount != 0) {
+                    queryResult = true; // Se a operação foi bem-sucedida, define queryResult como true.
+                }
+            });
+
+            // retorna o resultado da query
+            return queryResult;
+
+        // captura qualquer erro que aconteça
+        } catch (error) {
+            // Em caso de erro na consulta, exibe o erro no console e retorna false.
+            console.log(`Erro na consulta: ${error}`);
+            // retorna false
+            return queryResult;
+        }
+    }
     
 }
      
