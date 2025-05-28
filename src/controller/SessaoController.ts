@@ -7,8 +7,8 @@ import { Sessao } from "../model/Sessao";
 interface SessaoDTO{
     idFilme: number;
     idSala: number;
-    dataHoraInicio: number;
-    dataHoraFim: number;
+    dataHoraInicio: Date;
+    dataHoraFim: Date;
 }
 
 // Declara a classe 'SessaoController', que herda de 'Sessao', permitindo acesso aos métodos e propriedades da classe 'Sessao'.

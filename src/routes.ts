@@ -52,7 +52,7 @@ router.post(SERVER_ROUTES.CADASTRAR_CLIENTE, ClienteController.cadastrar);
  * Define a rota para listar todos os ingressos. Quando acessada via GET, chama o método 'todos' do IngressoController.
  */
 router.get(SERVER_ROUTES.LISTAR_INGRESSO, IngressoController.todos);  
-router.get(SERVER_ROUTES.CADASTRAR_INGRESSO, IngressoController.cadastrar);
+router.post(SERVER_ROUTES.CADASTRAR_INGRESSO, IngressoController.cadastrar);
 
 /**
  * Exporta o roteador para ser usado em outras partes da aplicação.

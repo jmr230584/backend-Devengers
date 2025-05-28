@@ -13,8 +13,8 @@ export class Sessao {
     private idSessao: number = 0;
     private idFilme: number;
     private idSala: number;
-    private DataHoraInicio: number;
-    private DataHoraFim: number;
+    private dataHoraInicio: Date;
+    private dataHoraFim: Date;
 
     /**
      * Construtor da classe Sessao
@@ -24,11 +24,11 @@ export class Sessao {
      * @param horario Horário da sessão
      * @param data Data da sessão
      */
-    constructor(idFilme: number, idSala: number, DataHoraInicio: number, DataHoraFim: number) {
+    constructor(idFilme: number, idSala: number, DataHoraInicio: Date, DataHoraFim: Date) {
         this.idFilme = idFilme;
         this.idSala = idSala;
-        this.DataHoraInicio = DataHoraInicio;
-        this.DataHoraFim = DataHoraFim;
+        this.dataHoraInicio = DataHoraInicio;
+        this.dataHoraFim = DataHoraFim;
     }
 
     // Getters e Setters
@@ -57,20 +57,20 @@ export class Sessao {
         this.idSala = idSala;
     }
 
-    public getDataHoraInicio(): number {
-        return this.DataHoraInicio;
+    public getDataHoraInicio(): Date {
+        return this.dataHoraInicio;
     }
 
-    public setdDtaHoraInicio(DataHoraInicio: number): void {
-        this.DataHoraInicio = DataHoraInicio;
+    public setdDtaHoraInicio(DataHoraInicio: Date): void {
+        this.dataHoraInicio = DataHoraInicio;
     }
 
-    public getDataHoraFim(): number {
-        return this.DataHoraFim;
+    public getDataHoraFim(): Date {
+        return this.dataHoraFim;
     }
 
-    public setDataHoraFim(DataHoraFim: number): void {
-        this.DataHoraFim = DataHoraFim;
+    public setDataHoraFim(DataHoraFim: Date): void {
+        this.dataHoraFim = DataHoraFim;
     }
     
 
@@ -90,8 +90,8 @@ export class Sessao {
                 const sessao = new Sessao(
                     linha.id_filme,
                     linha.id_sala,
-                    linha.DataHoraInicio,
-                    linha.data
+                    linha.dataHoraInicio,
+                    linha.dataHoraFim
                 );
                 sessao.setIdSessao(linha.id_sessao);
                 lista.push(sessao);
