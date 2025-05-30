@@ -131,6 +131,45 @@ export class Sala {
             return false;
         }
     }
+
+    /**
+         * Atualiza os dados de uma Sala no banco de dados.
+         * @param Sala Objeto do tipo Sala com os novos dados
+         * @returns true caso sucesso, false caso erro
+         */
+        static async atualizarSala(sala: Sala): Promise<boolean> {
+            try {
+                    // Construção da query SQL para atualizar os dados da Sala no banco de dados.
+                    const queryAtualizarSala = `UPDATE Sala SET 
+                                                numero_sala = '${sala.getNumeroSala()}', 
+                                                tipo_sala = '${sala.getTipoSala()}',
+                                                numero_assento = '${sala.getNumeroAssento()}',
+                                                fileira = '${sala.getFileira()}'                                          
+                                                WHERE id_sala = ${sala.idSala}`;
+    
+                    // Executa a query no banco de dados e armazena a resposta.
+                const respostaBD = await database.query(queryAtualizarSala);
+    
+                // Verifica se alguma linha foi alterada pela operação de atualização.
+                if (respostaBD.rowCount != 0) {
+                    // Loga uma mensagem de sucesso no console indicando que a Sala foi atualizado.
+                    console.log(`Sala atualizado com sucesso! ID: ${sala.getIdSala()}`);
+                    // Retorna `true` para indicar sucesso na atualização.
+                    return true;
+                }
+    
+                // Retorna `false` se nenhuma linha foi alterada (atualização não realizada).
+                return false;
+    
+            } catch (error) {
+                // Exibe uma mensagem de erro no console caso ocorra uma exceção.
+                console.log('Erro ao atualizar a Sala. Verifique os logs para mais detalhes.');
+                // Loga o erro no console para depuração.
+                console.log(error);
+                // Retorna `false` indicando que a atualização falhou.
+                return false;
+            }
+        }
     
     
 }

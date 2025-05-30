@@ -58,4 +58,45 @@ export class IngressoController extends Ingresso {
             return res.status(400).json('Erro ao cadastrar o ingresso');
         }
     }
+
+
+      /**
+         * Método para atualizar o cadastro de um ingresso.
+         * 
+         * @param req Objeto de requisição do Express, contendo os dados atualizados do ingresso
+         * @param res Objeto de resposta do Express
+         * @returns Retorna uma resposta HTTP indicando sucesso ou falha na atualização
+         */
+            static async atualizar(req: Request, res: Response): Promise<any> {
+                try {
+                    // Desestruturando objeto recebido pelo front-end
+                    const dadosRecebidos: IngressoDTO = req.body;
+                    
+                    // Instanciando objeto Ingresso
+                    const ingresso = new Ingresso(
+                        dadosRecebidos.idSessao,
+                        dadosRecebidos.idCliente,
+                        dadosRecebidos.statusIngresso,
+                        dadosRecebidos.precoIngresso              
+                    );
+        
+                    // Define o ID do Ingresso, que deve ser passado na query string
+                    ingresso.setIdIngresso(parseInt(req.query.idIngresso as string));
+        
+                    // Chama o método para atualizar o cadastro do ingresso no banco de dados
+                    if (await Ingresso.atualizarIngresso(ingresso)) {
+                        return res.status(200).json({ mensagem: "Cadastro atualizado com sucesso!" });
+                    } else {
+                        return res.status(400).json('Não foi possível atualizar o Ingresso no banco de dados');
+                    }
+                } catch (error) {
+                    // Caso ocorra algum erro, este é registrado nos logs do servidor
+                    console.error(`Erro no modelo: ${error}`);
+                    // Retorna uma resposta com uma mensagem de erro
+                    return res.json({ mensagem: "Erro ao atualizar Ingresso." });
+                }
+            }
+
+
+
 }

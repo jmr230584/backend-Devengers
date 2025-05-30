@@ -58,4 +58,42 @@ export class SalaController extends Sala {
             return res.status(400).json('Erro ao cadastrar a sala');
         }
     }
+
+
+      /**
+         * Método para atualizar o cadastro de uma sala.
+         * 
+         * @param req Objeto de requisição do Express, contendo os dados atualizados da sala
+         * @param res Objeto de resposta do Express
+         * @returns Retorna uma resposta HTTP indicando sucesso ou falha na atualização
+         */
+            static async atualizar(req: Request, res: Response): Promise<any> {
+                try {
+                    // Desestruturando objeto recebido pelo front-end
+                    const dadosRecebidos: SalaDTO = req.body;
+                    
+                    // Instanciando objeto Cliente
+                    const sala = new Sala(
+                        dadosRecebidos.numeroSala,
+                        dadosRecebidos.tipoSala,
+                        dadosRecebidos.numeroAssento,
+                        dadosRecebidos.fileira            
+                    );
+        
+                    // Define o ID da Sala, que deve ser passado na query string
+                    sala.setIdSala(parseInt(req.query.idSala as string));
+        
+                    // Chama o método para atualizar o cadastro da Sala no banco de dados
+                    if (await Sala.atualizarSala(sala)) {
+                        return res.status(200).json({ mensagem: "Cadastro atualizado com sucesso!" });
+                    } else {
+                        return res.status(400).json('Não foi possível atualizar a Sala no banco de dados');
+                    }
+                } catch (error) {
+                    // Caso ocorra algum erro, este é registrado nos logs do servidor
+                    console.error(`Erro no modelo: ${error}`);
+                    // Retorna uma resposta com uma mensagem de erro
+                    return res.json({ mensagem: "Erro ao atualizar Sala." });
+                }
+            }
 }
