@@ -129,6 +129,36 @@ export class Ingresso {
             return false;
         }
     }
+    
+    static async atualizarIngresso(ingresso: Ingresso): Promise<boolean> {
+    try {
+        // Construção da query SQL para atualizar os dados do Ingresso no banco de dados.
+        const queryAtualizarIngresso = `UPDATE Ingresso SET 
+                                        id_sessao = ${ingresso.getIdSessao()},
+                                        id_cliente = ${ingresso.getIdCliente()},
+                                        status_ingresso = '${ingresso.getStatusIngresso()}',
+                                        preco_ingresso = ${ingresso.getPrecoIngresso()}
+                                        WHERE id_ingresso = ${ingresso.getIdIngresso()}`;
+
+        // Executa a query no banco de dados
+        const respostaBD = await database.query(queryAtualizarIngresso);
+
+        // Verifica se alguma linha foi alterada
+        if (respostaBD.rowCount !== 0) {
+            console.log(`Ingresso atualizado com sucesso! ID: ${ingresso.getIdIngresso()}`);
+            return true;
+        }
+
+        // Nenhuma linha alterada
+        return false;
+
+    } catch (error) {
+        console.log("Erro ao atualizar o Ingresso. Verifique os logs para mais detalhes.");
+        console.error(error);
+        return false;
+    }
+}
+
 
         static async deletarIngresso(idIngresso: number): Promise<Boolean> {
     // variável para controle de resultado da consulta (query)

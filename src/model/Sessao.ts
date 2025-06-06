@@ -132,13 +132,33 @@ export class Sessao {
         }
     }
 
-    /**
-     
-Remove uma Sessao do banco de dados
-@param idSessao ID da Sessao a ser removido
- 
-@returns Boolean indicando se a remoção foi bem-sucedida,
-*/
+    static async atualizarSessao(sessao: Sessao): Promise<boolean> {
+    try {
+        const queryAtualizarSessao = `
+            UPDATE Sessao SET 
+                id_filme = ${sessao.getIdFilme()},
+                id_sala = ${sessao.getIdSala()},
+                data_hora_inicio = '${sessao.getDataHoraInicio()}',
+                data_hora_fim = '${sessao.getDataHoraFim()}'
+            WHERE id_sessao = ${sessao.getIdSessao()}
+        `;
+
+        const respostaBD = await database.query(queryAtualizarSessao);
+
+        if (respostaBD.rowCount !== 0) {
+            console.log(`Sessão atualizada com sucesso! ID: ${sessao.getIdSessao()}`);
+            return true;
+        }
+
+        return false;
+    } catch (error) {
+        console.log('Erro ao atualizar a Sessão. Verifique os logs para mais detalhes.');
+        console.error(error);
+        return false;
+    }
+}
+
+  
 static async deletarSessao(idSessao: number): Promise<Boolean> {
     // variável para controle de resultado da consulta (query)
     let queryResult = false;
