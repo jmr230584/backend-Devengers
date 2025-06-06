@@ -12,6 +12,9 @@ const SERVER_ROUTES = {
     LISTAR_INGRESSO: '/lista/ingressos', 
     // Rota para cadastrar um ingresso.
     CADASTRAR_INGRESSO: '/cadastro/ingresso',   
+    //Rota para atualizar um ingresso.
+    ATUALIZAR_INGRESSO: '/atualizar/ingresso',  
+
 
     // Rota para listar as sessões de cinema.
     LISTAR_SESSAO: '/lista/sessao',  
