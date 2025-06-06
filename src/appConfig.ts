@@ -16,10 +16,6 @@ const SERVER_ROUTES = {
     CADASTRAR_INGRESSO: '/cadastro/ingresso',   
      // Rota para atualizar um ingresso.
      ATUALIZAR_INGRESSO: '/atualizar/ingresso',   
-
-    CADASTRAR_INGRESSO: '/cadastro/ingresso', 
-   //Rota para atualizar um ingresso.
-    ATUALIZAR_INGRESSO: '/atualizar/ingresso', 
     // rota para deletar uma imgresso de cinema
     DELETAR_INGRESSO: '/deletar/ingresso',  
 
