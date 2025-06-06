@@ -168,5 +168,35 @@ export class Ingresso {
                 return false;
             }
         }
+        static async deletarIngresso(idIngresso: number): Promise<Boolean> {
+    // variável para controle de resultado da consulta (query)
+    let queryResult = false;
+
+    try {// Cria a consulta (query) para remover a Ingresso
+
+            // Construção da query SQL para deletar o Ingresso.
+            const queryDeleteIngresso = `UPDATE Ingresso
+                                        SET status_ingresso = FALSE
+                                            WHERE id_Ingresso=${idIngresso};`;
+
+            // Executa a query de exclusão e verifica se a operação foi bem-sucedida.
+            await database.query(queryDeleteIngresso)
+            .then((result) => {
+                if (result.rowCount != 0) {
+                    queryResult = true; // Se a operação foi bem-sucedida, define queryResult como true.
+                }
+            });
+
+            // retorna o resultado da query
+            return queryResult;
+
+        // captura qualquer erro que aconteça
+        } catch (error) {
+            // Em caso de erro na consulta, exibe o erro no console e retorna false.
+            console.log(`Erro na consulta: ${error}`);
+            // retorna false
+            return queryResult;
+        }
+    }
     
 }

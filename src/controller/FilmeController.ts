@@ -70,6 +70,27 @@ export class FilmeController extends Filme {
         }
     }
     
+    static async deletar(req: Request, res: any) {
+            try {
+              const idFilme = parseInt(req.query.idFilme as string);
+        
+              if (isNaN(idFilme)) {
+                return res.status(400).json("ID inválido");
+              }
+        
+              const resultado = await Filme.deletarFilme(idFilme);
+        
+              if (resultado) {
+                return res.status(200).json("Filme deletado com sucesso");
+              } else {
+                return res.status(404).json(resultado);
+              }
+            } catch (error) {
+              console.error("Erro ao deletar filme:", error);
+              return res.status(500).json("Erro no servidor ao deletar filme");
+            }
+    }
+    
       /**
          * Método para atualizar o cadastro de um filme.
          * 

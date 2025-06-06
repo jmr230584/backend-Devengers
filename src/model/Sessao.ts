@@ -131,45 +131,6 @@ export class Sessao {
             return false;
         }
     }
-
-    /**
-         * Atualiza os dados de uma sessao no banco de dados.
-         * @param Sessao Objeto do tipo Sessao com os novos dados
-         * @returns true caso sucesso, false caso erro
-         */
-        static async atualizarSessao(sessao: Sessao): Promise<boolean> {
-            try {
-                    // Construção da query SQL para atualizar os dados da Sessao no banco de dados.
-                    const queryAtualizarSessao = `UPDATE Sessao SET 
-                                                id_filme = '${sessao.getIdFilme()}', 
-                                                id_sala = '${sessao.getIdSala()}',
-                                                data_hora_inicio = '${sessao.getDataHoraInicio()}',
-                                                data_hora_fim = '${sessao.getDataHoraFim()}'                                     
-                                                WHERE id_sessao = ${sessao.idSessao}`;
-    
-                    // Executa a query no banco de dados e armazena a resposta.
-                const respostaBD = await database.query(queryAtualizarSessao);
-    
-                // Verifica se alguma linha foi alterada pela operação de atualização.
-                if (respostaBD.rowCount != 0) {
-                    // Loga uma mensagem de sucesso no console indicando que a Sessao foi atualizado.
-                    console.log(`Sessao atualizado com sucesso! ID: ${sessao.getIdSessao()}`);
-                    // Retorna `true` para indicar sucesso na atualização.
-                    return true;
-                }
-    
-                // Retorna `false` se nenhuma linha foi alterada (atualização não realizada).
-                return false;
-    
-            } catch (error) {
-                // Exibe uma mensagem de erro no console caso ocorra uma exceção.
-                console.log('Erro ao atualizar a Sessao. Verifique os logs para mais detalhes.');
-                // Loga o erro no console para depuração.
-                console.log(error);
-                // Retorna `false` indicando que a atualização falhou.
-                return false;
-            }
-        }
     
 
 }

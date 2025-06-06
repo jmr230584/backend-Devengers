@@ -99,4 +99,25 @@ export class SessaoController extends Sessao {
 
 
 
+    
+    static async deletar(req: Request, res: any) {
+        try {
+          const idSessao = parseInt(req.query.idSessao as string);
+    
+          if (isNaN(idSessao)) {
+            return res.status(400).json("ID inválido");
+          }
+    
+          const resultado = await Sessao.deletarSessao(idSessao);
+    
+          if (resultado) {
+            return res.status(200).json("Sessão deletada com sucesso");
+          } else {
+            return res.status(404).json(resultado);
+          }
+        } catch (error) {
+          console.error("Erro ao deletar sessão:", error);
+          return res.status(500).json("Erro no servidor ao deletar sessão");
+        }
+}
 }
