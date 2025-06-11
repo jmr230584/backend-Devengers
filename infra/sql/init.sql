@@ -91,3 +91,4 @@ ADD disponibilidade VARCHAR(20);
 UPDATE Filme SET disponibilidade = 'Disponível' WHERE disponibilidade IS NULL;
 ALTER TABLE Filme
 ALTER COLUMN disponibilidade SET NOT NULL;
+

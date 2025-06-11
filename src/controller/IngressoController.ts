@@ -58,4 +58,25 @@ export class IngressoController extends Ingresso {
             return res.status(400).json('Erro ao cadastrar o ingresso');
         }
     }
+
+    static async deletar(req: Request, res: any) {
+            try {
+              const idIngresso = parseInt(req.query.idIngresso as string);
+        
+              if (isNaN(idIngresso)) {
+                return res.status(400).json("ID inválido");
+              }
+        
+              const resultado = await Ingresso.deletarIngresso(idIngresso);
+        
+              if (resultado) {
+                return res.status(200).json("Ingresso deletado com sucesso");
+              } else {
+                return res.status(404).json(resultado);
+              }
+            } catch (error) {
+              console.error("Erro ao deletar ingresso:", error);
+              return res.status(500).json("Erro no servidor ao deletar ingresso");
+            }
+    }
 }
