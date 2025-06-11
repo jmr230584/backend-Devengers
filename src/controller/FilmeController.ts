@@ -68,7 +68,7 @@ export class FilmeController extends Filme {
             console.error(`Erro ao cadastrar o filme: ${error}`);
             return res.status(400).json('Erro ao cadastrar o filme');
         }
-    }
+    } 
    static async atualizar(req: Request, res: Response): Promise<any> {
     try {
         // Desestruturando objeto recebido pelo front-end

@@ -131,6 +131,69 @@ export class Sessao {
             return false;
         }
     }
+<<<<<<< HEAD
+=======
+
+    static async atualizarSessao(sessao: Sessao): Promise<boolean> {
+    try {
+        const queryAtualizarSessao = `
+            UPDATE Sessao SET 
+                id_filme = ${sessao.getIdFilme()},
+                id_sala = ${sessao.getIdSala()},
+                data_hora_inicio = '${sessao.getDataHoraInicio()}',
+                data_hora_fim = '${sessao.getDataHoraFim()}'
+            WHERE id_sessao = ${sessao.getIdSessao()}
+        `;
+
+        const respostaBD = await database.query(queryAtualizarSessao);
+
+        if (respostaBD.rowCount !== 0) {
+            console.log(`Sessão atualizada com sucesso! ID: ${sessao.getIdSessao()}`);
+            return true;
+        }
+
+        return false;
+    } catch (error) {
+        console.log('Erro ao atualizar a Sessão. Verifique os logs para mais detalhes.');
+        console.error(error);
+        return false;
+    }
+}
+
+  
+static async deletarSessao(idSessao: number): Promise<Boolean> {
+    // variável para controle de resultado da consulta (query)
+    let queryResult = false;
+
+    try {// Cria a consulta (query) para remover a Sessao
+
+            // Construção da query SQL para deletar o Sessao.
+            const queryDeleteSessao = `UPDATE Sessao 
+                                        SET status_sessao = FALSE
+                                            WHERE id_Sessao=${idSessao};`;
+
+            // Executa a query de exclusão e verifica se a operação foi bem-sucedida.
+            await database.query(queryDeleteSessao)
+            .then((result) => {
+                if (result.rowCount != 0) {
+                    queryResult = true; // Se a operação foi bem-sucedida, define queryResult como true.
+                }
+            });
+
+            // retorna o resultado da query
+            return queryResult;
+
+        // captura qualquer erro que aconteça
+        } catch (error) {
+            // Em caso de erro na consulta, exibe o erro no console e retorna false.
+            console.log(`Erro na consulta: ${error}`);
+            // retorna false
+            return queryResult;
+        }
+    }
+>>>>>>> f18a714259bb6efa0c3beddeb8d4a59e1239dd36
     
 
 }
+
+//

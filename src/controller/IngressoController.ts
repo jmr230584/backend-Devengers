@@ -58,7 +58,7 @@ export class IngressoController extends Ingresso {
             return res.status(400).json('Erro ao cadastrar o ingresso');
         }
     }
-
+    
     static async atualizar(req: Request, res: Response): Promise<any> {
     try {
         // Desestruturando o objeto recebido do front-end

@@ -229,6 +229,6 @@ export class Sala {
     }
     
 }
-     
+
 //
      

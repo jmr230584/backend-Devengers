@@ -129,7 +129,7 @@ export class Ingresso {
             return false;
         }
     }
-
+    
     static async atualizarIngresso(ingresso: Ingresso): Promise<boolean> {
     try {
         // Construção da query SQL para atualizar os dados do Ingresso no banco de dados.
@@ -230,3 +230,6 @@ export class Ingresso {
     }
     
 }
+
+
+//
