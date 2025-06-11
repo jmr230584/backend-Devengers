@@ -131,8 +131,6 @@ export class Sessao {
             return false;
         }
     }
-<<<<<<< HEAD
-=======
 
     static async atualizarSessao(sessao: Sessao): Promise<boolean> {
     try {
@@ -191,7 +189,6 @@ static async deletarSessao(idSessao: number): Promise<Boolean> {
             return queryResult;
         }
     }
->>>>>>> f18a714259bb6efa0c3beddeb8d4a59e1239dd36
     
 
 }
