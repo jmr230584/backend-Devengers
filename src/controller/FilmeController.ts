@@ -135,7 +135,6 @@ export class FilmeController extends Filme {
               return res.status(500).json("Erro no servidor ao deletar filme");
             }
     }
-    
 }
 
 //

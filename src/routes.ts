@@ -7,6 +7,7 @@ import { SessaoController } from "./controller/SessaoController";
 import { ClienteController } from "./controller/ClienteController";  
 import { IngressoController } from "./controller/IngressoController";  
 import { SERVER_ROUTES } from "./appConfig";
+import { Filme } from "./model/Filme";
 
 // Cria uma instância do roteador para definir as rotas da API.
 const router = Router();  
@@ -25,6 +26,7 @@ router.get("/", (req: Request, res: Response) => {
  */
 router.get(SERVER_ROUTES.LISTAR_FILME, FilmeController.todos);  
 router.post(SERVER_ROUTES.CADASTRAR_FILME, FilmeController.cadastrar);
+router.post(SERVER_ROUTES.ATUALIZAR_FILME, FilmeController.atualizar);
 
 /**
  *  ROTAS PARA SALA
@@ -32,6 +34,7 @@ router.post(SERVER_ROUTES.CADASTRAR_FILME, FilmeController.cadastrar);
  */
 router.get(SERVER_ROUTES.LISTAR_SALA, SalaController.todos);  
 router.post(SERVER_ROUTES.CADASTRAR_SALA, SalaController.cadastrar);
+router.post(SERVER_ROUTES.ATUALIZAR_SALA, SalaController.atualizar);
 
 /**
  *  ROTAS PARA SESSAO
@@ -39,7 +42,7 @@ router.post(SERVER_ROUTES.CADASTRAR_SALA, SalaController.cadastrar);
  */
 router.get(SERVER_ROUTES.LISTAR_SESSAO, SessaoController.todos);  
 router.post(SERVER_ROUTES.CADASTRAR_SESSAO, SessaoController.cadastrar);
-router.delete(SERVER_ROUTES.DELETAR_SESSAO, SessaoController.deletar);
+router.post(SERVER_ROUTES.ATUALIZAR_SESSAO, SessaoController.atualizar);
 
 /**
  *  ROTAS PARA CLIENTE
@@ -55,6 +58,7 @@ router.put(SERVER_ROUTES.ATUALIZAR_CLIENTE, ClienteController.atualizar);
  */
 router.get(SERVER_ROUTES.LISTAR_INGRESSO, IngressoController.todos);  
 router.post(SERVER_ROUTES.CADASTRAR_INGRESSO, IngressoController.cadastrar);
+router.post(SERVER_ROUTES.ATUALIZAR_INGRESSO, IngressoController.atualizar);
 
 /**
  * Exporta o roteador para ser usado em outras partes da aplicação.
