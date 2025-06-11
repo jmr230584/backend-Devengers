@@ -25,9 +25,6 @@ const SERVER_ROUTES = {
     CADASTRAR_SESSAO: '/cadastro/sessao',  
      // Rota para atualizar uma sessao.
      ATUALIZAR_SESSAO: '/atualizar/sessao',   
-
-   //Rota para atualizar uma sessao.
-    ATUALIZAR_SESSAO: '/atualizar/sessao', 
     // rota para deletar uma sessão de cinema
     DELETAR_SESSAO: '/deletar/sessao',
 
@@ -37,19 +34,11 @@ const SERVER_ROUTES = {
     CADASTRAR_FILME: '/cadastro/filme',
      // Rota para atualizar um filme.
      ATUALIZAR_FILME: '/atualizar/filme',   
-
-   //Rota para atualizar um filme.
-    ATUALIZAR_FILME: '/atualizar/filme', 
     // rota para deletar uma filme de cinema
     DELETAR_FILME: '/deletar/filme',
 
     // Rota para listar as salas de cinema.
     LISTAR_SALA: '/lista/sala',
-    // Rota para cadastrar uma sala de cinema.
-    CADASTRAR_SALA: '/cadastro/sala',
-     // Rota para atualizar uma sala.
-     ATUALIZAR_SALA: '/atualizar/sala',   
-
     CADASTRAR_SALA: '/cadastro/sala',
    //Rota para atualizar uma sala.
     ATUALIZAR_SALA: '/atualizar/sala', 

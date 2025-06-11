@@ -69,7 +69,7 @@ export class FilmeController extends Filme {
             return res.status(400).json('Erro ao cadastrar o filme');
         }
     }
-    
+
     static async deletar(req: Request, res: any) {
             try {
               const idFilme = parseInt(req.query.idFilme as string);
