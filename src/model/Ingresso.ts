@@ -129,75 +129,7 @@ export class Ingresso {
             return false;
         }
     }
-    
-    static async atualizarIngresso(ingresso: Ingresso): Promise<boolean> {
-    try {
-        // Construção da query SQL para atualizar os dados do Ingresso no banco de dados.
-        const queryAtualizarIngresso = `UPDATE Ingresso SET 
-                                        id_sessao = ${ingresso.getIdSessao()},
-                                        id_cliente = ${ingresso.getIdCliente()},
-                                        status_ingresso = '${ingresso.getStatusIngresso()}',
-                                        preco_ingresso = ${ingresso.getPrecoIngresso()}
-                                        WHERE id_ingresso = ${ingresso.getIdIngresso()}`;
 
-        // Executa a query no banco de dados
-        const respostaBD = await database.query(queryAtualizarIngresso);
-
-        // Verifica se alguma linha foi alterada
-        if (respostaBD.rowCount !== 0) {
-            console.log(`Ingresso atualizado com sucesso! ID: ${ingresso.getIdIngresso()}`);
-            return true;
-        }
-
-        // Nenhuma linha alterada
-        return false;
-
-    } catch (error) {
-        console.log("Erro ao atualizar o Ingresso. Verifique os logs para mais detalhes.");
-        console.error(error);
-        return false;
-    }
-}
-
-
-    /**
-         * Atualiza os dados de um Ingresso no banco de dados.
-         * @param Ingresso Objeto do tipo Ingresso com os novos dados
-         * @returns true caso sucesso, false caso erro
-         */
-        static async atualizarIngresso(ingresso: Ingresso): Promise<boolean> {
-            try {
-                    // Construção da query SQL para atualizar os dados do Ingresso no banco de dados.
-                    const queryAtualizarIngresso = `UPDATE Ingresso SET 
-                                                id_sessao = '${ingresso.getIdSessao()}', 
-                                                id_cliente = '${ingresso.getIdCliente()}',
-                                                status_ingresso = '${ingresso.getStatusIngresso()}',
-                                                preco_ingresso = '${ingresso.getPrecoIngresso()}'                                         
-                                                WHERE id_ingresso = ${ingresso.idIngresso}`;
-    
-                    // Executa a query no banco de dados e armazena a resposta.
-                const respostaBD = await database.query(queryAtualizarIngresso);
-    
-                // Verifica se alguma linha foi alterada pela operação de atualização.
-                if (respostaBD.rowCount != 0) {
-                    // Loga uma mensagem de sucesso no console indicando que o Ingresso foi atualizado.
-                    console.log(`Ingresso atualizado com sucesso! ID: ${ingresso.getIdIngresso()}`);
-                    // Retorna `true` para indicar sucesso na atualização.
-                    return true;
-                }
-    
-                // Retorna `false` se nenhuma linha foi alterada (atualização não realizada).
-                return false;
-    
-            } catch (error) {
-                // Exibe uma mensagem de erro no console caso ocorra uma exceção.
-                console.log('Erro ao atualizar o Ingresso. Verifique os logs para mais detalhes.');
-                // Loga o erro no console para depuração.
-                console.log(error);
-                // Retorna `false` indicando que a atualização falhou.
-                return false;
-            }
-        }
         static async deletarIngresso(idIngresso: number): Promise<Boolean> {
     // variável para controle de resultado da consulta (query)
     let queryResult = false;

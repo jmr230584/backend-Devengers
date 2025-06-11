@@ -194,79 +194,7 @@ export class Filme {
             return false;
         }
     }
-    static async atualizarFilme(filme: Filme): Promise<boolean> {
-       try {
-         // Construção da query SQL para atualizar os dados do Filme no banco de dados.
-     const queryAtualizarFilme = `UPDATE Filme SET 
-                        titulo = '${filme.getTitulo().toUpperCase()}', 
-                        sinopse = '${filme.getSinopse()}', 
-                        duracao = '${filme.getDuracao()}', 
-                        classificacao_etaria = '${filme.getClassificacaoEtaria()}', 
-                        genero = '${filme.getGenero().toUpperCase()}', 
-                        ano_lancamento = ${filme.getAnoLancamento()}, 
-                        poster_filme = '${filme.getPosterFilme()}'
-                         WHERE id_filme = ${filme.getIdFilme()}`;
 
-        // Executa a query no banco de dados e armazena a resposta.
-        const respostaBD = await database.query(queryAtualizarFilme);
-
-        // Verifica se alguma linha foi alterada pela operação de atualização.
-        if (respostaBD.rowCount != 0) {
-            console.log(`Filme atualizado com sucesso! ID: ${filme.getIdFilme()}`);
-            return true;
-        }
-
-        return false;
-
-    } catch (error) {
-        console.log('Erro ao atualizar o Filme. Verifique os logs para mais detalhes.');
-        console.log(error);
-        return false;
-    }
-}
-
-    /**
-         * Atualiza os dados de um Filme no banco de dados.
-         * @param Filme Objeto do tipo Filme com os novos dados
-         * @returns true caso sucesso, false caso erro
-         */
-        static async atualizarFilme(filme: Filme): Promise<boolean> {
-            try {
-                    // Construção da query SQL para atualizar os dados do Filme no banco de dados.
-                    const queryAtualizarFilme = `UPDATE Filme SET 
-                                                titulo = '${filme.getTitulo().toUpperCase()}', 
-                                                sinopse = '${filme.getSinopse()}',
-                                                duracao = '${filme.getDuracao()}',
-                                                classificacaoEtaria = '${filme.getClassificacaoEtaria()}', 
-                                                genero = '${filme.getGenero().toUpperCase()}',      
-                                                anoLancamento = '${filme.getAnoLancamento()}',
-                                                posterFilme = '${filme.getPosterFilme()}',
-                                                disponibilidade = '${filme.getDisponibilidade()}'
-                                                WHERE id_filme = ${filme.idFilme}`;
-    
-                    // Executa a query no banco de dados e armazena a resposta.
-                const respostaBD = await database.query(queryAtualizarFilme);
-    
-                // Verifica se alguma linha foi alterada pela operação de atualização.
-                if (respostaBD.rowCount != 0) {
-                    // Loga uma mensagem de sucesso no console indicando que o Aluno foi atualizado.
-                    console.log(`Filme atualizado com sucesso! ID: ${filme.getIdFilme()}`);
-                    // Retorna `true` para indicar sucesso na atualização.
-                    return true;
-                }
-    
-                // Retorna `false` se nenhuma linha foi alterada (atualização não realizada).
-                return false;
-    
-            } catch (error) {
-                // Exibe uma mensagem de erro no console caso ocorra uma exceção.
-                console.log('Erro ao atualizar o Filme. Verifique os logs para mais detalhes.');
-                // Loga o erro no console para depuração.
-                console.log(error);
-                // Retorna `false` indicando que a atualização falhou.
-                return false;
-            }
-        }
     static async deletarFilme(idFilme: number): Promise<Boolean> {
     // variável para controle de resultado da consulta (query)
     let queryResult = false;
