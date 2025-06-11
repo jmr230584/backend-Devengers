@@ -69,6 +69,51 @@ export class FilmeController extends Filme {
             return res.status(400).json('Erro ao cadastrar o filme');
         }
     }
+   static async atualizar(req: Request, res: Response): Promise<any> {
+    try {
+        // Desestruturando objeto recebido pelo front-end
+        const dadosRecebidos: FilmeDTO = req.body;
+
+        // Instanciando objeto Filme
+        const filme = new Filme(
+            dadosRecebidos.titulo,
+            dadosRecebidos.sinopse,
+            dadosRecebidos.duracao,
+            dadosRecebidos.classificacaoEtaria,
+            dadosRecebidos.genero,
+            dadosRecebidos.anoLancamento,
+            dadosRecebidos.posterFilme,
+            dadosRecebidos.disponibilidade
+        );
+
+        // Verifica se o idFilme foi passado na query e é válido
+        const idFilmeStr = req.query.idFilme as string | undefined;
+        if (!idFilmeStr) {
+            return res.status(400).json({ mensagem: "Parâmetro idFilme é obrigatório." });
+        }
+
+        const idFilmeNum = parseInt(idFilmeStr);
+        if (isNaN(idFilmeNum)) {
+            return res.status(400).json({ mensagem: "idFilme deve ser um número válido." });
+        }
+
+        // Define o ID do Filme
+        filme.setIdFilme(idFilmeNum);
+
+        // Chama o método para atualizar o cadastro do Filme no banco de dados
+        const atualizado = await Filme.atualizarFilme(filme);
+        if (atualizado) {
+            return res.status(200).json({ mensagem: "Filme atualizado com sucesso!" });
+        } else {
+            return res.status(400).json({ mensagem: "Não foi possível atualizar o Filme no banco de dados" });
+        }
+    } catch (error) {
+        console.error(`Erro no modelo: ${error}`);
+        return res.status(500).json({ mensagem: "Erro ao atualizar Filme." });
+    }
+}
+
+
 
     static async deletar(req: Request, res: any) {
             try {
@@ -134,3 +179,5 @@ export class FilmeController extends Filme {
 
 
 }
+
+//

@@ -170,6 +170,32 @@ export class Sala {
                 return false;
             }
         }
+=======
+    static async atualizarSala(sala: Sala): Promise<boolean> {
+    try {
+        const queryAtualizarSala = `UPDATE Sala SET 
+            numero_sala = ${sala.getNumeroSala()}, 
+            tipo_sala = '${sala.getTipoSala().toUpperCase()}', 
+            numero_assento = ${sala.getNumeroAssento()}, 
+            fileira = ${sala.getFileira()}
+            WHERE id_sala = ${sala.getIdSala()}`;
+
+        const respostaBD = await database.query(queryAtualizarSala);
+
+        if (respostaBD.rowCount !== 0) {
+            console.log(`Sala atualizada com sucesso! ID: ${sala.getIdSala()}`);
+            return true;
+        }
+
+        return false;
+    } catch (error) {
+        console.log("Erro ao atualizar a Sala. Verifique os logs para mais detalhes.");
+        console.error(error);
+        return false;
+    }
+}
+
+>>>>>>> f18a714259bb6efa0c3beddeb8d4a59e1239dd36
     
      static async deletarSala(idSala: number): Promise<Boolean> {
     // variável para controle de resultado da consulta (query)
@@ -203,4 +229,6 @@ export class Sala {
     }
     
 }
+     
+//
      
