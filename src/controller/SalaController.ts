@@ -59,6 +59,36 @@ export class SalaController extends Sala {
         }
     }
 
+    static async atualizar(req: Request, res: Response): Promise<any> {
+    try {
+        // Desestruturando o objeto recebido do front-end
+        const dadosRecebidos: SalaDTO = req.body;
+
+        // Instanciando o objeto Sala
+        const sala = new Sala(
+            dadosRecebidos.numeroSala,
+            dadosRecebidos.tipoSala,
+            dadosRecebidos.numeroAssento,
+            dadosRecebidos.fileira
+        );
+
+        // Define o ID da Sala, passado via query string
+        sala.setIdSala(parseInt(req.query.idSala as string));
+
+        // Chama o método para atualizar a sala no banco de dados
+        if (await Sala.atualizarSala(sala)) {
+            return res.status(200).json({ mensagem: "Sala atualizada com sucesso!" });
+        } else {
+            return res.status(400).json({ mensagem: "Não foi possível atualizar a Sala no banco de dados." });
+        }
+    } catch (error) {
+        // Caso ocorra algum erro, este é registrado nos logs do servidor
+        console.error(`Erro ao atualizar Sala: ${error}`);
+        return res.status(500).json({ mensagem: "Erro ao atualizar Sala." });
+    }
+}
+
+
     static async deletar(req: Request, res: any) {
             try {
               const idSala = parseInt(req.query.idSala as string);
@@ -80,3 +110,5 @@ export class SalaController extends Sala {
             }
     }
 }
+
+//

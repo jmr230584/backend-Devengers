@@ -80,3 +80,6 @@ export class DataBaseModel {
         return this._pool;  // Retorna a instância do pool de conexões.
     }
 }
+
+
+//

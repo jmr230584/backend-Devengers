@@ -58,6 +58,36 @@ export class IngressoController extends Ingresso {
             return res.status(400).json('Erro ao cadastrar o ingresso');
         }
     }
+    
+    static async atualizar(req: Request, res: Response): Promise<any> {
+    try {
+        // Desestruturando o objeto recebido do front-end
+        const dadosRecebidos: IngressoDTO = req.body;
+
+        // Instanciando o objeto Ingresso
+        const ingresso = new Ingresso(
+            dadosRecebidos.idSessao,
+            dadosRecebidos.idCliente,
+            dadosRecebidos.statusIngresso,
+            dadosRecebidos.precoIngresso
+        );
+
+        // Define o ID do Ingresso, passado via query string
+        ingresso.setIdIngresso(parseInt(req.query.idIngresso as string));
+
+        // Chama o método para atualizar o ingresso no banco de dados
+        if (await Ingresso.atualizarIngresso(ingresso)) {
+            return res.status(200).json({ mensagem: "Ingresso atualizado com sucesso!" });
+        } else {
+            return res.status(400).json({ mensagem: "Não foi possível atualizar o Ingresso no banco de dados." });
+        }
+    } catch (error) {
+        // Caso ocorra algum erro, este é registrado nos logs do servidor
+        console.error(`Erro ao atualizar Ingresso: ${error}`);
+        return res.status(500).json({ mensagem: "Erro ao atualizar Ingresso." });
+    }
+}
+
 
     static async deletar(req: Request, res: any) {
             try {
@@ -80,3 +110,5 @@ export class IngressoController extends Ingresso {
             }
     }
 }
+
+//

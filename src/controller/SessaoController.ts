@@ -58,6 +58,34 @@ export class SessaoController extends Sessao {
             }
     }
 
+    static async atualizar(req: Request, res: Response): Promise<any> {
+    try {
+        // Desestruturando o objeto recebido do front-end
+        const dadosRecebidos: SessaoDTO = req.body;
+
+        // Instanciando o objeto Sessao
+        const sessao = new Sessao(
+            dadosRecebidos.idFilme,
+            dadosRecebidos.idSala,
+            dadosRecebidos.dataHoraInicio,
+            dadosRecebidos.dataHoraFim
+        );
+
+        // Define o ID da Sessao, passado via query string
+        sessao.setIdSessao(parseInt(req.query.idSessao as string));
+
+        // Chama o método para atualizar a sessão no banco de dados
+        if (await Sessao.atualizarSessao(sessao)) {
+            return res.status(200).json({ mensagem: "Sessão atualizada com sucesso!" });
+        } else {
+            return res.status(400).json({ mensagem: "Não foi possível atualizar a Sessão no banco de dados." });
+        }
+    } catch (error) {
+        console.error(`Erro ao atualizar Sessão: ${error}`);
+        return res.status(500).json({ mensagem: "Erro ao atualizar Sessão." });
+    }
+}
+
     
     static async deletar(req: Request, res: any) {
         try {
@@ -80,3 +108,5 @@ export class SessaoController extends Sessao {
         }
 }
 }
+
+//
