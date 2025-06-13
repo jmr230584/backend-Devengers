@@ -25,6 +25,8 @@ router.get("/", (req: Request, res: Response) => {
  */
 router.get(SERVER_ROUTES.LISTAR_FILME, FilmeController.todos);  
 router.post(SERVER_ROUTES.CADASTRAR_FILME, FilmeController.cadastrar);
+router.delete(SERVER_ROUTES.DELETAR_FILME, FilmeController.deletar);
+router.put(SERVER_ROUTES.ATUALIZAR_FILME, FilmeController.atualizar);
 
 /**
  *  ROTAS PARA SALA
@@ -32,6 +34,8 @@ router.post(SERVER_ROUTES.CADASTRAR_FILME, FilmeController.cadastrar);
  */
 router.get(SERVER_ROUTES.LISTAR_SALA, SalaController.todos);  
 router.post(SERVER_ROUTES.CADASTRAR_SALA, SalaController.cadastrar);
+router.delete(SERVER_ROUTES.DELETAR_SALA, SalaController.deletar);
+router.put(SERVER_ROUTES.ATUALIZAR_SALA, SalaController.atualizar);
 
 /**
  *  ROTAS PARA SESSAO
@@ -40,6 +44,7 @@ router.post(SERVER_ROUTES.CADASTRAR_SALA, SalaController.cadastrar);
 router.get(SERVER_ROUTES.LISTAR_SESSAO, SessaoController.todos);  
 router.post(SERVER_ROUTES.CADASTRAR_SESSAO, SessaoController.cadastrar);
 router.delete(SERVER_ROUTES.DELETAR_SESSAO, SessaoController.deletar);
+router.put(SERVER_ROUTES.ATUALIZAR_SESSAO, SessaoController.atualizar);
 
 /**
  *  ROTAS PARA CLIENTE
@@ -47,6 +52,7 @@ router.delete(SERVER_ROUTES.DELETAR_SESSAO, SessaoController.deletar);
  */
 router.get(SERVER_ROUTES.LISTAR_CLIENTES, ClienteController.todos);  
 router.post(SERVER_ROUTES.CADASTRAR_CLIENTE, ClienteController.cadastrar);
+router.delete(SERVER_ROUTES.DELETAR_CLIENTE, ClienteController.deletar);
 router.put(SERVER_ROUTES.ATUALIZAR_CLIENTE, ClienteController.atualizar);
 
 /**
@@ -55,6 +61,8 @@ router.put(SERVER_ROUTES.ATUALIZAR_CLIENTE, ClienteController.atualizar);
  */
 router.get(SERVER_ROUTES.LISTAR_INGRESSO, IngressoController.todos);  
 router.post(SERVER_ROUTES.CADASTRAR_INGRESSO, IngressoController.cadastrar);
+router.delete(SERVER_ROUTES.DELETAR_INGRESSO, IngressoController.deletar);
+router.put(SERVER_ROUTES.ATUALIZAR_INGRESSO, IngressoController.atualizar);
 
 /**
  * Exporta o roteador para ser usado em outras partes da aplicação.
