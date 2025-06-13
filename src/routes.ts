@@ -7,6 +7,7 @@ import { SessaoController } from "./controller/SessaoController";
 import { ClienteController } from "./controller/ClienteController";  
 import { IngressoController } from "./controller/IngressoController";  
 import { SERVER_ROUTES } from "./appConfig";
+import { Filme } from "./model/Filme";
 
 // Cria uma instância do roteador para definir as rotas da API.
 const router = Router();  
@@ -28,6 +29,7 @@ router.post(SERVER_ROUTES.CADASTRAR_FILME, FilmeController.cadastrar);
 router.delete(SERVER_ROUTES.DELETAR_FILME, FilmeController.deletar);
 router.put(SERVER_ROUTES.ATUALIZAR_FILME, FilmeController.atualizar);
 
+
 /**
  *  ROTAS PARA SALA
  * Define a rota para listar todas as salas. Quando acessada via GET, chama o método 'todos' do SalaController.
@@ -37,6 +39,7 @@ router.post(SERVER_ROUTES.CADASTRAR_SALA, SalaController.cadastrar);
 router.delete(SERVER_ROUTES.DELETAR_SALA, SalaController.deletar);
 router.put(SERVER_ROUTES.ATUALIZAR_SALA, SalaController.atualizar);
 
+
 /**
  *  ROTAS PARA SESSAO
  * Define a rota para listar todas as sessões. Quando acessada via GET, chama o método 'todos' do SessaoController.
@@ -45,6 +48,7 @@ router.get(SERVER_ROUTES.LISTAR_SESSAO, SessaoController.todos);
 router.post(SERVER_ROUTES.CADASTRAR_SESSAO, SessaoController.cadastrar);
 router.delete(SERVER_ROUTES.DELETAR_SESSAO, SessaoController.deletar);
 router.put(SERVER_ROUTES.ATUALIZAR_SESSAO, SessaoController.atualizar);
+
 
 /**
  *  ROTAS PARA CLIENTE

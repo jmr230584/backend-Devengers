@@ -133,29 +133,28 @@ export class Sala {
     }
 
     static async atualizarSala(sala: Sala): Promise<boolean> {
-    try {
-        const queryAtualizarSala = `UPDATE Sala SET 
-            numero_sala = ${sala.getNumeroSala()}, 
-            tipo_sala = '${sala.getTipoSala().toUpperCase()}', 
-            numero_assento = ${sala.getNumeroAssento()}, 
-            fileira = ${sala.getFileira()}
-            WHERE id_sala = ${sala.getIdSala()}`;
-
-        const respostaBD = await database.query(queryAtualizarSala);
-
-        if (respostaBD.rowCount !== 0) {
-            console.log(`Sala atualizada com sucesso! ID: ${sala.getIdSala()}`);
-            return true;
+        try {
+            const queryAtualizarSala = `UPDATE Sala SET 
+                numero_sala = ${sala.getNumeroSala()}, 
+                tipo_sala = '${sala.getTipoSala().toUpperCase()}', 
+                numero_assento = ${sala.getNumeroAssento()}, 
+                fileira = ${sala.getFileira()}
+                WHERE id_sala = ${sala.getIdSala()};`
+    
+            const respostaBD = await database.query(queryAtualizarSala);
+    
+            if (respostaBD.rowCount !== 0) {
+                console.log(`Sala atualizada com sucesso! ID: ${sala.getIdSala()}`);
+                return true;
+            }
+    
+            return false;
+        } catch (error) {
+            console.log("Erro ao atualizar a Sala. Verifique os logs para mais detalhes.");
+            console.error(error);
+            return false;
         }
-
-        return false;
-    } catch (error) {
-        console.log("Erro ao atualizar a Sala. Verifique os logs para mais detalhes.");
-        console.error(error);
-        return false;
     }
-}
-
     
      static async deletarSala(idSala: number): Promise<Boolean> {
     // variável para controle de resultado da consulta (query)
