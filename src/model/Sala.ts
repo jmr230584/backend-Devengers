@@ -158,13 +158,12 @@ export class Sala {
     
      static async deletarSala(idSala: number): Promise<Boolean> {
     // variável para controle de resultado da consulta (query)
-    let queryResult = false;
+    let queryResult = true;
 
     try {// Cria a consulta (query) para remover a Sala
 
             // Construção da query SQL para deletar o Sala.
-            const queryDeleteSala = `UPDATE Sala
-                                        SET status_sala = FALSE
+            const queryDeleteSala = `DELETE FROM Sala
                                             WHERE id_Sala=${idSala};`;
 
             // Executa a query de exclusão e verifica se a operação foi bem-sucedida.

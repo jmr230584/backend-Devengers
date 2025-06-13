@@ -15,7 +15,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3333/lista/clientes",
+							"raw": "http://localhost:3333/lista/cliente",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -23,7 +23,97 @@
 							"port": "3333",
 							"path": [
 								"lista",
-								"clientes"
+								"cliente"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CADASTRAR CLIENTES",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nomeCompleto\": \"Felisberto Pinto Silva\",\r\n  \"email\": \"Felisberto.silva@email.com\",\r\n  \"senha\": \"senha1234\",\r\n  \"cpf\": 49962601817,\r\n  \"celular\":\"16991115683\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/cadastro/cliente",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"cadastro",
+								"cliente"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ATUALIZAR CLIENTE",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"nomeCompleto\": \"FELISBERTO SILVA\",\r\n        \"email\": \"FELISBERTO.SILVA@EMAIL.COM\",\r\n        \"senha\": \"senha1234\",\r\n        \"cpf\": \"49962601817\",\r\n        \"celular\": \"16991115683\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/atualizar/cliente?idCliente=13",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"atualizar",
+								"cliente"
+							],
+							"query": [
+								{
+									"key": "idCliente",
+									"value": "13"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETAR CLIENTE",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3333/deletar/cliente?idCliente=12",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"deletar",
+								"cliente"
+							],
+							"query": [
+								{
+									"key": "idCliente",
+									"value": "12"
+								}
 							]
 						}
 					},
@@ -40,7 +130,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3333/lista/filmes",
+							"raw": "http://localhost:3333/lista/filme",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -48,7 +138,101 @@
 							"port": "3333",
 							"path": [
 								"lista",
-								"filmes"
+								"filme"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CADASTRAR FILMES",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"titulo\": \"Noite Infinita\",\r\n  \"sinopse\": \"Um suspense envolvente onde um grupo de amigos enfrenta eventos sobrenaturais durante uma viagem.\",\r\n  \"duracao\": 125,\r\n  \"classificacaoEtaria\": \"16\",\r\n  \"genero\": \"Suspense\",\r\n  \"anoLancamento\": 2024,\r\n  \"posterFilme\": \"https://link-do-poster.com/noite-infinita.jpg\",\r\n  \"disponibilidade\": \"Disponível\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/cadastro/filme",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"cadastro",
+								"filme"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ATUALIZAR FILME",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"titulo\": \"Dia Infinito\",\r\n  \"sinopse\": \"Um suspense envolvente onde um grupo de amigos enfrenta eventos sobrenaturais durante uma viagem.\",\r\n  \"duracao\": 125,\r\n  \"classificacaoEtaria\": \"16\",\r\n  \"genero\": \"Suspense\",\r\n  \"anoLancamento\": 2024,\r\n  \"posterFilme\": \"https://link-do-poster.com/noite-infinita.jpg\",\r\n  \"disponibilidade\": \"Disponível\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/atualizar/filme?idFilme=8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"atualizar",
+								"filme"
+							],
+							"query": [
+								{
+									"key": "idFilme",
+									"value": "8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETAR FILME",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"titulo\": \"Dia Infinito\",\r\n  \"sinopse\": \"Um suspense envolvente onde um grupo de amigos enfrenta eventos sobrenaturais durante uma viagem.\",\r\n  \"duracao\": 125,\r\n  \"classificacaoEtaria\": \"16\",\r\n  \"genero\": \"Suspense\",\r\n  \"anoLancamento\": 2024,\r\n  \"posterFilme\": \"https://link-do-poster.com/noite-infinita.jpg\",\r\n  \"disponibilidade\": \"Disponível\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3333/deletar/filme?idFilme=8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"deletar",
+								"filme"
+							],
+							"query": [
+								{
+									"key": "idFilme",
+									"value": "8"
+								}
 							]
 						}
 					},
@@ -78,6 +262,61 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "CADASTRAR INGRESSOS",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idSessao\": 6,\r\n  \"idCliente\": 3,\r\n  \"statusIngresso\": \"\",\r\n  \"precoIngresso\": 30\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/cadastro/ingresso",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"cadastro",
+								"ingresso"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETAR INGRESSO",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3333/deletar/ingresso?idIngresso=6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"deletar",
+								"ingresso"
+							],
+							"query": [
+								{
+									"key": "idIngresso",
+									"value": "6"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -90,7 +329,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3333/lista/salas",
+							"raw": "http://localhost:3333/lista/sala",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -98,7 +337,97 @@
 							"port": "3333",
 							"path": [
 								"lista",
-								"salas"
+								"sala"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CADASTRAR SALA",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"numeroSala\": 6,\r\n        \"tipoSala\": \"IMAX\",\r\n        \"numeroAssento\": 100,\r\n        \"fileira\": 12\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/cadastro/sala",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"cadastro",
+								"sala"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ATUALIZAR SALA",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"numeroSala\": 6,\r\n        \"tipoSala\": \"VIP\",\r\n        \"numeroAssento\": 120,\r\n        \"fileira\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/atualizar/sala?idSala=9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"atualizar",
+								"sala"
+							],
+							"query": [
+								{
+									"key": "idSala",
+									"value": "9"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETAR SALA",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3333/deletar/sala?idSala=6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"deletar",
+								"sala"
+							],
+							"query": [
+								{
+									"key": "idSala",
+									"value": "6"
+								}
 							]
 						}
 					},
@@ -115,7 +444,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3333/lista/sessoes",
+							"raw": "http://localhost:3333/lista/sessao",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -123,7 +452,97 @@
 							"port": "3333",
 							"path": [
 								"lista",
-								"sessoes"
+								"sessao"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CADASTRAR SESSÕES",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"idFilme\": 3,\r\n        \"idSala\": 4,\r\n        \"dataHoraInicio\": \"21/09/2027\",\r\n        \"dataHoraFim\": \"21/09/2027\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/cadastro/sessao",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"cadastro",
+								"sessao"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETAR SESSÃO",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3333/deletar/sessao?idSessao=8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"deletar",
+								"sessao"
+							],
+							"query": [
+								{
+									"key": "idSessao",
+									"value": "8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ATUALIZAR SESSÃO",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"idFilme\": 6,\r\n        \"idSala\": 8,\r\n        \"dataHoraInicio\": \"2025-08-23T03:00:00.000Z\",\r\n        \"dataHoraFim\": \"2025-08-23T03:00:00.000Z\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3333/atualizar/sessao?idSessao=7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3333",
+							"path": [
+								"atualizar",
+								"sessao"
+							],
+							"query": [
+								{
+									"key": "idSessao",
+									"value": "7"
+								}
 							]
 						}
 					},

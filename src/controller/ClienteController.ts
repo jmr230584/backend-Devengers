@@ -84,6 +84,8 @@ export class ClienteController extends Cliente {
     
                 // Define o ID do Cliente, que deve ser passado na query string
                 cliente.setIdCliente(parseInt(req.query.idCliente as string));
+
+                console.log(dadosRecebidos);
     
                 // Chama o método para atualizar o cadastro do Cliente no banco de dados
                 if (await Cliente.atualizarCliente(cliente)) {
@@ -101,7 +103,7 @@ export class ClienteController extends Cliente {
 
         static async deletar(req: Request, res: any) {
                     try {
-                      const idCliente = parseInt(req.query.idFilme as string);
+                      const idCliente = parseInt(req.query.idCliente as string);
                 
                       if (isNaN(idCliente)) {
                         return res.status(400).json("ID inválido");

@@ -191,16 +191,15 @@ export class Cliente {
         }
     }
 
-    static async deletarCliente(idCliente: number): Promise<Boolean> {
+    static async deletarCliente(id_Cliente: number): Promise<Boolean> {
     // variável para controle de resultado da consulta (query)
     let queryResult = false;
 
     try {// Cria a consulta (query) para remover a Cliente
 
             // Construção da query SQL para deletar o Cliente.
-            const queryDeleteCliente = `UPDATE Cliente
-                                        SET status_cliente = FALSE
-                                            WHERE id_Cliente=${idCliente};`;
+            const queryDeleteCliente = `DELETE  FROM Cliente
+                                            WHERE id_Cliente=${id_Cliente};`;
 
             // Executa a query de exclusão e verifica se a operação foi bem-sucedida.
             await database.query(queryDeleteCliente)

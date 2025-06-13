@@ -233,8 +233,7 @@ export class Filme {
     try {// Cria a consulta (query) para remover a Filme
 
             // Construção da query SQL para deletar o Filme.
-            const queryDeleteFilme = `UPDATE Filme
-                                        SET status_filme = FALSE
+            const queryDeleteFilme = `DELETE FROM Filme
                                             WHERE id_Filme=${idFilme};`;
 
             // Executa a query de exclusão e verifica se a operação foi bem-sucedida.

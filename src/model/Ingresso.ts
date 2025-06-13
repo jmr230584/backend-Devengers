@@ -103,7 +103,9 @@ export class Ingresso {
         }
     }
      
-    static async cadastrarIngresso(ingresso: Ingresso): Promise<boolean> {
+    static async cadastrarIngresso(ingresso: Ingresso): Promise<any> {
+        let insertResult = false ;
+        let objetoResposta = {queryResult:false,idIngresso:0} 
         try {
             const queryInsertIngresso = `
                 INSERT INTO Ingresso (id_sessao, id_cliente, status_ingresso, preco_ingresso)
@@ -120,13 +122,15 @@ export class Ingresso {
     
             if (result.rows.length > 0) {
                 console.log(`Ingresso cadastrado com sucesso. ID: ${result.rows[0].id_ingresso}`);
-                return true;
+                insertResult = true;
+               let idIngresso = result.rows[0].id_ingresso;
+               objetoResposta = {queryResult:insertResult,idIngresso:idIngresso}
             }
-    
-            return false;
+        return objetoResposta;
+
         } catch (error) {
             console.error(`Erro ao cadastrar ingresso: ${error}`);
-            return false;
+            return{queryResult:false};
         }
     }
 
@@ -166,8 +170,7 @@ export class Ingresso {
     try {// Cria a consulta (query) para remover a Ingresso
 
             // Construção da query SQL para deletar o Ingresso.
-            const queryDeleteIngresso = `UPDATE Ingresso
-                                        SET status_ingresso = FALSE
+            const queryDeleteIngresso = `DELETE FROM Ingresso
                                             WHERE id_Ingresso=${idIngresso};`;
 
             // Executa a query de exclusão e verifica se a operação foi bem-sucedida.

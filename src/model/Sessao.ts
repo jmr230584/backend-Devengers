@@ -166,8 +166,7 @@ static async deletarSessao(idSessao: number): Promise<Boolean> {
     try {// Cria a consulta (query) para remover a Sessao
 
             // Construção da query SQL para deletar o Sessao.
-            const queryDeleteSessao = `UPDATE Sessao 
-                                        SET status_sessao = FALSE
+            const queryDeleteSessao = `DELETE FROM Sessao 
                                             WHERE id_Sessao=${idSessao};`;
 
             // Executa a query de exclusão e verifica se a operação foi bem-sucedida.
