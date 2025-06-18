@@ -1,0 +1,89 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "version": "v1.0.0",
+      "title": "CinePop",  
+      "description": "Resumo do CinePop"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:3333",  
+        "description": ""
+      }
+    ],
+    "paths": {
+      "/": {
+        "get": {
+          "description": "",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      }
+    },
+    "/cadastro/cliente": {
+  "post": {
+    "tags": ["cliente"],
+    "summary": "Cadastrar novo cliente",
+    "description": "Essa rota recebe informações de clientes para cadastrar no sistema",
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "nomeCompleto": {
+                "type": "string",
+                "example": "Felisberto Pinto Silva"
+              },
+              "email": {
+                "type": "string",
+                "format": "email",
+                "example": "Felisberto.silva@email.com"
+              },
+              "senha": {
+                "type": "string",
+                "example": "senha1234"
+              },
+              "cpf": {
+                "type": "string",
+                "example": "49962601817"
+              },
+              "celular": {
+                "type": "string",
+                "example": "16991115683"
+              }
+            },
+            "required": ["nomeCompleto", "email", "senha", "cpf", "celular"]
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "Cliente cadastrado com sucesso"
+      },
+      "400": {
+        "description": "Erro ao cadastrar cliente"
+      }
+    },
+    "security": [
+      {
+        "apiKey": []
+      }
+    ]
+  }
+},
+
+    "components": {
+      "securitySchemes": {
+        "bearerAuth": {
+          "type": "http",
+          "scheme": "bearer"
+        }
+      }
+    }
+  }

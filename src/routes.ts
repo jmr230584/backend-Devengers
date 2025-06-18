@@ -7,7 +7,8 @@ import { SessaoController } from "./controller/SessaoController";
 import { ClienteController } from "./controller/ClienteController";  
 import { IngressoController } from "./controller/IngressoController";  
 import { SERVER_ROUTES } from "./appConfig";
-import { Filme } from "./model/Filme";
+import swaggerUi from "swagger-ui-express"; // Importa a API do swagger
+import swaggerOutput from "../docs/swagger_doc.json"; // Importa o arquivo de saída do swagger
 
 // Cria uma instância do roteador para definir as rotas da API.
 const router = Router();  
@@ -19,6 +20,8 @@ const router = Router();
 router.get("/", (req: Request, res: Response) => {  
     res.json({ mensagem: "Servidor do cinema rodando" });  
 });  
+
+router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerOutput)); // Rota para acessar a documentação 
 
 /**
  * ROTAS PARA FILME
