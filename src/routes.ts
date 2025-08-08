@@ -1,13 +1,13 @@
 // Importa os módulos necessários do 'express', incluindo o tipo 'Express', 'Request', 'Response', e 'Router'.
 // Importa também os controladores de cada recurso (Filme, Sala, Sessao, Cliente, Ingresso).
-import { Express, Request, Response, Router } from "express";  
+import { Request, Response, Router } from "express";  
 import { FilmeController } from "./controller/FilmeController";  
 import { SalaController } from "./controller/SalaController";  
 import { SessaoController } from "./controller/SessaoController";  
 import { ClienteController } from "./controller/ClienteController";  
 import { IngressoController } from "./controller/IngressoController";  
 import { SERVER_ROUTES } from "./appConfig";
-import { Filme } from "./model/Filme";
+import { Auth } from "./utils/Auth";
 
 // Cria uma instância do roteador para definir as rotas da API.
 const router = Router();  
@@ -58,6 +58,8 @@ router.get(SERVER_ROUTES.LISTAR_CLIENTES, ClienteController.todos);
 router.post(SERVER_ROUTES.CADASTRAR_CLIENTE, ClienteController.cadastrar);
 router.delete(SERVER_ROUTES.DELETAR_CLIENTE, ClienteController.deletar);
 router.put(SERVER_ROUTES.ATUALIZAR_CLIENTE, ClienteController.atualizar);
+router.post('/login', Auth.validacaoCliente);
+router.get('/rota-protegida', Auth.verifyToken, (req, res) => { res.send('Rota protegida, se você está vendo essa mensagem é porque está autenticado no sistema') });
 
 /**
  * ROTAS PARA INGRESSO
