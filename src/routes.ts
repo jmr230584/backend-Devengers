@@ -9,6 +9,10 @@ import { IngressoController } from "./controller/IngressoController";
 import { SERVER_ROUTES } from "./appConfig";
 import { Auth } from "./utils/Auth";
 
+
+import swaggerUi from 'swagger-ui-express';
+import swaggerOutput from "../docs/swagger_doc.json"
+
 // Cria uma instância do roteador para definir as rotas da API.
 const router = Router();  
 
@@ -19,6 +23,8 @@ const router = Router();
 router.get("/", (req: Request, res: Response) => {  
     res.json({ mensagem: "Servidor do cinema rodando" });  
 });  
+
+router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerOutput)); // Rota para acessar a documentação 
 
 /**
  * ROTAS PARA FILME
