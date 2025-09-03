@@ -158,7 +158,7 @@ export class Cliente {
      */
     static async atualizarCliente(cliente: Cliente): Promise<boolean> {
         try {
-                const queryAtualizarCliente = `UPDATE Cliente SET 
+            const queryAtualizarCliente = `UPDATE Cliente SET 
                                             nome_completo = '${cliente.getNomeCompleto().toUpperCase()}', 
                                             email = '${cliente.getEmail().toLowerCase()}',
                                             senha = '${cliente.getSenha().toUpperCase()}',
@@ -191,7 +191,7 @@ export class Cliente {
     }
 
     static async deletarCliente(id_Cliente: number): Promise<Boolean> {
-    let queryResult = false;
+        let queryResult = false;
 
         try {
             const queryDeleteCliente = `DELETE FROM Cliente
@@ -199,11 +199,11 @@ export class Cliente {
 
             // Executa a query de exclusão e verifica se a operação foi bem-sucedida.
             await database.query(queryDeleteCliente)
-            .then((result) => {
-                if (result.rowCount != 0) {
+                .then((result) => {
+                    if (result.rowCount != 0) {
                         queryResult = true;
-                }
-            });
+                    }
+                });
 
             // retorna o resultado da query
             return queryResult;
