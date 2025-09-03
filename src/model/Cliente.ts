@@ -14,7 +14,7 @@ export class Cliente {
     private nomeCompleto: string;
     private email: string;
     private senha: string;
-    private cpf: number;
+    private cpf: string;  // ALTERADO para string
     private celular: string;
 
     /**
@@ -23,10 +23,10 @@ export class Cliente {
      * @param nomeCompleto Nome completo do cliente
      * @param email Email do cliente
      * @param senha Senha do cliente
-     * @param cpf CPF do cliente
+     * @param cpf CPF do cliente (string)
      * @param celular Celular do cliente
      */
-    constructor(nomeCompleto: string, email: string, senha: string, cpf: number, celular: string) {
+    constructor(nomeCompleto: string, email: string, senha: string, cpf: string, celular: string) { // ALTERADO para string
         this.nomeCompleto = nomeCompleto;
         this.email = email;
         this.senha = senha;
@@ -39,7 +39,6 @@ export class Cliente {
     public getIdCliente(): number {
         return this.idCliente;
     }
-
 
     public setIdCliente(id: number): void {
         this.idCliente = id;
@@ -69,12 +68,11 @@ export class Cliente {
         this.senha = senha;
     }
 
-    public getCpf(): number {
+    public getCpf(): string {   // ALTERADO para string
         return this.cpf;
     }
 
-
-    public setCpf(cpf: number): void {
+    public setCpf(cpf: string): void {   // ALTERADO para string
         this.cpf = cpf;
     }
 
@@ -102,7 +100,7 @@ export class Cliente {
                     linha.nome_completo,
                     linha.email,
                     linha.senha,
-                    linha.cpf,
+                    linha.cpf,   // já vem como string
                     linha.celular
                 );
                 cliente.setIdCliente(linha.id_cliente);
@@ -115,112 +113,77 @@ export class Cliente {
             return null;
         }
     }
+
     static async cadastrarCliente(cliente: Cliente): Promise<Boolean> {
         try {
-            // Cria a consulta (query) para inserir o registro de um  no banco de dados, retorna o ID do cliente que foi criado no final
             const queryInsertCliente = `
                 INSERT INTO Cliente (nome_completo, email, senha, cpf, celular)
                 VALUES (
-                    '${cliente.getNomeCompleto().toUpperCase()}',
-                    '${cliente.getEmail().toUpperCase()}',
+                    '${cliente.getNomeCompleto()}',
+                    '${cliente.getEmail()}',
                     '${cliente.getSenha()}',
-                    '${cliente.getCpf()}',
+                    '${cliente.getCpf()}',  -- agora é string
                     '${cliente.getCelular().toLowerCase()}'
                 )
                 RETURNING id_cliente;`;
 
-            // Executa a query no banco de dados e armazena o resultado
             const resultBD = await database.query(queryInsertCliente);
 
-            // verifica se a quantidade de linhas que foram alteradas é maior que 0
             if (resultBD.rows.length > 0) {
-                // Exibe a mensagem de sucesso
                 console.log(`Cliente cadastrado com sucesso. ID: ${resultBD.rows[0].id_cliente}`);
-                // retorna verdadeiro
                 return true;
             }
-
-            // caso a consulta não tenha tido sucesso, retorna falso
             return false;
-            // captura erro
         } catch (error) {
-            // Exibe mensagem com detalhes do erro no console
             console.error(`Erro ao cadastrar cliente: ${error}`);
-            // retorna falso
             return false;
         }
     }
 
-    /**
-     * Atualiza os dados de um Cliente no banco de dados.
-     * @param Cliente Objeto do tipo Cliente com os novos dados
-     * @returns true caso sucesso, false caso erro
-     */
     static async atualizarCliente(cliente: Cliente): Promise<boolean> {
         try {
-                // Construção da query SQL para atualizar os dados do Cliente no banco de dados.
-                const queryAtualizarCliente = `UPDATE Cliente SET 
+            const queryAtualizarCliente = `UPDATE Cliente SET 
                                             nome_completo = '${cliente.getNomeCompleto().toUpperCase()}', 
                                             email = '${cliente.getEmail().toLowerCase()}',
                                             senha = '${cliente.getSenha().toUpperCase()}',
-                                            cpf = '${cliente.getCpf()}', 
+                                            cpf = '${cliente.getCpf()}',   -- string
                                             celular = '${cliente.getCelular()}'                                            
                                             WHERE id_cliente = ${cliente.idCliente}`;
 
-                // Executa a query no banco de dados e armazena a resposta.
             const respostaBD = await database.query(queryAtualizarCliente);
 
-            // Verifica se alguma linha foi alterada pela operação de atualização.
             if (respostaBD.rowCount != 0) {
-                // Loga uma mensagem de sucesso no console indicando que o Aluno foi atualizado.
                 console.log(`Cliente atualizado com sucesso! ID: ${cliente.getIdCliente()}`);
-                // Retorna `true` para indicar sucesso na atualização.
                 return true;
             }
-
-            // Retorna `false` se nenhuma linha foi alterada (atualização não realizada).
             return false;
 
         } catch (error) {
-            // Exibe uma mensagem de erro no console caso ocorra uma exceção.
             console.log('Erro ao atualizar o Cliente. Verifique os logs para mais detalhes.');
-            // Loga o erro no console para depuração.
             console.log(error);
-            // Retorna `false` indicando que a atualização falhou.
             return false;
         }
     }
 
     static async deletarCliente(id_Cliente: number): Promise<Boolean> {
-    // variável para controle de resultado da consulta (query)
-    let queryResult = false;
+        let queryResult = false;
 
-    try {// Cria a consulta (query) para remover a Cliente
+        try {
+            const queryDeleteCliente = `DELETE FROM Cliente
+                                        WHERE id_Cliente=${id_Cliente};`;
 
-            // Construção da query SQL para deletar o Cliente.
-            const queryDeleteCliente = `DELETE  FROM Cliente
-                                            WHERE id_Cliente=${id_Cliente};`;
-
-            // Executa a query de exclusão e verifica se a operação foi bem-sucedida.
             await database.query(queryDeleteCliente)
-            .then((result) => {
-                if (result.rowCount != 0) {
-                    queryResult = true; // Se a operação foi bem-sucedida, define queryResult como true.
-                }
-            });
+                .then((result) => {
+                    if (result.rowCount != 0) {
+                        queryResult = true;
+                    }
+                });
 
-            // retorna o resultado da query
             return queryResult;
-
-        // captura qualquer erro que aconteça
         } catch (error) {
-            // Em caso de erro na consulta, exibe o erro no console e retorna false.
             console.log(`Erro na consulta: ${error}`);
-            // retorna false
             return queryResult;
         }
     }
 }
 
-
-//
