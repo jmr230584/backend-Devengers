@@ -40,6 +40,7 @@ export class Cliente {
         return this.idCliente;
     }
 
+
     public setIdCliente(id: number): void {
         this.idCliente = id;
     }
@@ -116,6 +117,7 @@ export class Cliente {
 
     static async cadastrarCliente(cliente: Cliente): Promise<Boolean> {
         try {
+            // Cria a consulta (query) para inserir o registro de um  no banco de dados, retorna o ID do cliente que foi criado no final
             const queryInsertCliente = `
                 INSERT INTO Cliente (nome_completo, email, senha, cpf, celular)
                 VALUES (
@@ -127,19 +129,33 @@ export class Cliente {
                 )
                 RETURNING id_cliente;`;
 
+            // Executa a query no banco de dados e armazena o resultado
             const resultBD = await database.query(queryInsertCliente);
 
+            // verifica se a quantidade de linhas que foram alteradas é maior que 0
             if (resultBD.rows.length > 0) {
+                // Exibe a mensagem de sucesso
                 console.log(`Cliente cadastrado com sucesso. ID: ${resultBD.rows[0].id_cliente}`);
+                // retorna verdadeiro
                 return true;
             }
+
+            // caso a consulta não tenha tido sucesso, retorna falso
             return false;
+            // captura erro
         } catch (error) {
+            // Exibe mensagem com detalhes do erro no console
             console.error(`Erro ao cadastrar cliente: ${error}`);
+            // retorna falso
             return false;
         }
     }
 
+    /**
+     * Atualiza os dados de um Cliente no banco de dados.
+     * @param Cliente Objeto do tipo Cliente com os novos dados
+     * @returns true caso sucesso, false caso erro
+     */
     static async atualizarCliente(cliente: Cliente): Promise<boolean> {
         try {
             const queryAtualizarCliente = `UPDATE Cliente SET 
@@ -150,17 +166,26 @@ export class Cliente {
                                             celular = '${cliente.getCelular()}'                                            
                                             WHERE id_cliente = ${cliente.idCliente}`;
 
+                // Executa a query no banco de dados e armazena a resposta.
             const respostaBD = await database.query(queryAtualizarCliente);
 
+            // Verifica se alguma linha foi alterada pela operação de atualização.
             if (respostaBD.rowCount != 0) {
+                // Loga uma mensagem de sucesso no console indicando que o Aluno foi atualizado.
                 console.log(`Cliente atualizado com sucesso! ID: ${cliente.getIdCliente()}`);
+                // Retorna `true` para indicar sucesso na atualização.
                 return true;
             }
+
+            // Retorna `false` se nenhuma linha foi alterada (atualização não realizada).
             return false;
 
         } catch (error) {
+            // Exibe uma mensagem de erro no console caso ocorra uma exceção.
             console.log('Erro ao atualizar o Cliente. Verifique os logs para mais detalhes.');
+            // Loga o erro no console para depuração.
             console.log(error);
+            // Retorna `false` indicando que a atualização falhou.
             return false;
         }
     }
@@ -172,6 +197,7 @@ export class Cliente {
             const queryDeleteCliente = `DELETE FROM Cliente
                                         WHERE id_Cliente=${id_Cliente};`;
 
+            // Executa a query de exclusão e verifica se a operação foi bem-sucedida.
             await database.query(queryDeleteCliente)
                 .then((result) => {
                     if (result.rowCount != 0) {
@@ -179,11 +205,17 @@ export class Cliente {
                     }
                 });
 
+            // retorna o resultado da query
             return queryResult;
+
+        // captura qualquer erro que aconteça
         } catch (error) {
+            // Em caso de erro na consulta, exibe o erro no console e retorna false.
             console.log(`Erro na consulta: ${error}`);
             return queryResult;
         }
     }
 }
 
+
+//
