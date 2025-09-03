@@ -14,7 +14,7 @@ export class Cliente {
     private nomeCompleto: string;
     private email: string;
     private senha: string;
-    private cpf: number;
+    private cpf: string;  // ALTERADO para string
     private celular: string;
 
     /**
@@ -23,10 +23,10 @@ export class Cliente {
      * @param nomeCompleto Nome completo do cliente
      * @param email Email do cliente
      * @param senha Senha do cliente
-     * @param cpf CPF do cliente
+     * @param cpf CPF do cliente (string)
      * @param celular Celular do cliente
      */
-    constructor(nomeCompleto: string, email: string, senha: string, cpf: number, celular: string) {
+    constructor(nomeCompleto: string, email: string, senha: string, cpf: string, celular: string) { // ALTERADO para string
         this.nomeCompleto = nomeCompleto;
         this.email = email;
         this.senha = senha;
@@ -69,12 +69,11 @@ export class Cliente {
         this.senha = senha;
     }
 
-    public getCpf(): number {
+    public getCpf(): string {   // ALTERADO para string
         return this.cpf;
     }
 
-
-    public setCpf(cpf: number): void {
+    public setCpf(cpf: string): void {   // ALTERADO para string
         this.cpf = cpf;
     }
 
@@ -102,7 +101,7 @@ export class Cliente {
                     linha.nome_completo,
                     linha.email,
                     linha.senha,
-                    linha.cpf,
+                    linha.cpf,   // já vem como string
                     linha.celular
                 );
                 cliente.setIdCliente(linha.id_cliente);
@@ -115,16 +114,17 @@ export class Cliente {
             return null;
         }
     }
+
     static async cadastrarCliente(cliente: Cliente): Promise<Boolean> {
         try {
             // Cria a consulta (query) para inserir o registro de um  no banco de dados, retorna o ID do cliente que foi criado no final
             const queryInsertCliente = `
                 INSERT INTO Cliente (nome_completo, email, senha, cpf, celular)
                 VALUES (
-                    '${cliente.getNomeCompleto().toUpperCase()}',
-                    '${cliente.getEmail().toUpperCase()}',
+                    '${cliente.getNomeCompleto()}',
+                    '${cliente.getEmail()}',
                     '${cliente.getSenha()}',
-                    '${cliente.getCpf()}',
+                    '${cliente.getCpf()}',  -- agora é string
                     '${cliente.getCelular().toLowerCase()}'
                 )
                 RETURNING id_cliente;`;
@@ -158,12 +158,11 @@ export class Cliente {
      */
     static async atualizarCliente(cliente: Cliente): Promise<boolean> {
         try {
-                // Construção da query SQL para atualizar os dados do Cliente no banco de dados.
                 const queryAtualizarCliente = `UPDATE Cliente SET 
                                             nome_completo = '${cliente.getNomeCompleto().toUpperCase()}', 
                                             email = '${cliente.getEmail().toLowerCase()}',
                                             senha = '${cliente.getSenha().toUpperCase()}',
-                                            cpf = '${cliente.getCpf()}', 
+                                            cpf = '${cliente.getCpf()}',   -- string
                                             celular = '${cliente.getCelular()}'                                            
                                             WHERE id_cliente = ${cliente.idCliente}`;
 
@@ -192,20 +191,17 @@ export class Cliente {
     }
 
     static async deletarCliente(id_Cliente: number): Promise<Boolean> {
-    // variável para controle de resultado da consulta (query)
     let queryResult = false;
 
-    try {// Cria a consulta (query) para remover a Cliente
-
-            // Construção da query SQL para deletar o Cliente.
-            const queryDeleteCliente = `DELETE  FROM Cliente
-                                            WHERE id_Cliente=${id_Cliente};`;
+        try {
+            const queryDeleteCliente = `DELETE FROM Cliente
+                                        WHERE id_Cliente=${id_Cliente};`;
 
             // Executa a query de exclusão e verifica se a operação foi bem-sucedida.
             await database.query(queryDeleteCliente)
             .then((result) => {
                 if (result.rowCount != 0) {
-                    queryResult = true; // Se a operação foi bem-sucedida, define queryResult como true.
+                        queryResult = true;
                 }
             });
 
@@ -216,7 +212,6 @@ export class Cliente {
         } catch (error) {
             // Em caso de erro na consulta, exibe o erro no console e retorna false.
             console.log(`Erro na consulta: ${error}`);
-            // retorna false
             return queryResult;
         }
     }
