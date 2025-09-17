@@ -4,7 +4,8 @@
 // 'router' que contém as rotas da API.
 import express from 'express';  
 import cors from 'cors';  
-import { router } from './routes';  
+import { router } from './routes'; 
+import path from 'path'; 
 
 // Cria uma instância do servidor express.
 const server = express();  
@@ -19,6 +20,9 @@ server.use(express.json());
 
 // Configura as rotas no servidor, usando o roteador importado.
 server.use(router);  
+
+// Serve os arquivos da pasta uploads
+server.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads'))); 
 
 // Exporta o servidor configurado para que ele possa ser usado em outros arquivos.
 export { server };  

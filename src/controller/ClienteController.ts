@@ -1,25 +1,23 @@
-// Importa os tipos Request e Response da biblioteca 'express', usados para tipar as requisições e respostas na API.
 import { Request, Response } from "express";  
-
-// Importa o modelo 'Cliente', que provavelmente contém métodos e propriedades relacionadas aos clientes.
 import { Cliente } from "../model/Cliente";  
+import path from "path";
+import fs from "fs";
 
 // DTO do Cliente
 interface ClienteDTO {
     nomeCompleto: string;
     email: string;
     senha: string;
-    cpf: string;   // ALTERADO para string
+    cpf: string;   // string
     celular: string;
 }
 
-// Declara a classe 'ClienteController', que herda de 'Cliente', permitindo acesso aos métodos e propriedades da classe 'Cliente'.
 export class ClienteController extends Cliente {  
+
     static async todos(req: Request, res: Response): Promise<any> {  
         try {  
             const listaDeClientes = await Cliente.listarClientes();  
             return res.status(200).json(listaDeClientes);  
-        // Se ocorrer algum erro dentro do bloco 'try', o código irá para o bloco 'catch'.
         } catch (error) {  
             console.log("Erro ao listar clientes:", error);  
             return res.status(400).json({ mensagem: "Não foi possível listar os clientes." });  
@@ -34,20 +32,33 @@ export class ClienteController extends Cliente {
                 dadosRecebidos.nomeCompleto,
                 dadosRecebidos.email,
                 dadosRecebidos.senha,
-                dadosRecebidos.cpf,     // string
+                dadosRecebidos.cpf,
                 dadosRecebidos.celular
             );
 
-            const result = await Cliente.cadastrarCliente(novoCliente);
-    
-            if (result) {
-                return res.status(200).json('Cliente cadastrado com sucesso');
-            } else {
-                return res.status(400).json('Não foi possível cadastrar o cliente no banco de dados');
+            // Caso tenha recebido uma imagem do multer
+            if (req.file) {
+                const ext = path.extname(req.file.originalname); 
+                const novoNome = `${Date.now()}${ext}`; // Nome único baseado em timestamp
+                const antigoPath = req.file.path; 
+                const novoPath = path.resolve(req.file.destination, novoNome); 
+
+                fs.renameSync(antigoPath, novoPath); 
+
+                novoCliente.setImagemPerfil(novoNome); 
             }
+
+            // Cadastra o cliente no banco
+            const cadastrado = await Cliente.cadastrarCliente(novoCliente);
+
+            if (!cadastrado) {
+                return res.status(500).json({ erro: "Erro ao cadastrar cliente" });
+            }
+
+            return res.status(201).json({ mensagem: "Cliente cadastrado com sucesso" });
         } catch (error) {
-            console.error(`Erro ao cadastrar o cliente: ${error}`);
-            return res.status(400).json('Erro ao cadastrar o cliente');
+            console.error("Erro ao cadastrar cliente:", error);
+            res.status(500).json({ erro: "Erro ao cadastrar cliente", detalhes: error });
         }
     }
 
@@ -59,26 +70,36 @@ export class ClienteController extends Cliente {
                 dadosRecebidos.nomeCompleto,
                 dadosRecebidos.email,
                 dadosRecebidos.senha,
-                dadosRecebidos.cpf,   // string
+                dadosRecebidos.cpf,
                 dadosRecebidos.celular              
             );
     
             cliente.setIdCliente(parseInt(req.query.idCliente as string));
 
-            console.log(dadosRecebidos);
+            // Caso venha nova imagem no update
+            if (req.file) {
+                const ext = path.extname(req.file.originalname); 
+                const novoNome = `${cliente.getIdCliente()}${ext}`; 
+                const antigoPath = req.file.path; 
+                const novoPath = path.resolve(req.file.destination, novoNome); 
+
+                fs.renameSync(antigoPath, novoPath); 
+
+                cliente.setImagemPerfil(novoNome); 
+            }
     
             if (await Cliente.atualizarCliente(cliente)) {
-                return res.status(200).json({ mensagem: "Cadastro atualizado com sucesso!" });
+                return res.status(200).json({ mensagem: "Cliente atualizado com sucesso!" });
             } else {
-                return res.status(400).json('Não foi possível atualizar o Cliente no banco de dados');
+                return res.status(400).json("Não foi possível atualizar o Cliente no banco de dados");
             }
         } catch (error) {
-            console.error(`Erro no modelo: ${error}`);
-            return res.json({ mensagem: "Erro ao atualizar Cliente." });
+            console.error("Erro no modelo:", error);
+            return res.status(500).json({ mensagem: "Erro ao atualizar Cliente." });
         }
     }
 
-    static async deletar(req: Request, res: any) {
+    static async deletar (req: Request, res: Response) : Promise<any>{
         try {
             const idCliente = parseInt(req.query.idCliente as string);
       
@@ -91,7 +112,7 @@ export class ClienteController extends Cliente {
             if (resultado) {
               return res.status(200).json("Cliente deletado com sucesso");
             } else {
-              return res.status(404).json(resultado);
+              return res.status(404).json("Cliente não encontrado");
             }
         } catch (error) {
             console.error("Erro ao deletar cliente:", error);
@@ -99,5 +120,3 @@ export class ClienteController extends Cliente {
         }
     }
 }
-
-

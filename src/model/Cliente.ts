@@ -16,6 +16,7 @@ export class Cliente {
     private senha: string;
     private cpf: string;  // ALTERADO para string
     private celular: string;
+    private imagemPerfil: string = '' // Imagem de perfil do usuário
 
     /**
      * Construtor da classe Cliente
@@ -85,6 +86,22 @@ export class Cliente {
         this.celular = celular;
     }
 
+       /**
+     * Retorna a o caminho da imagem do usuario
+     * @returns caminho da imagem do usuário
+     */
+    public getImagemPerfil(): string {
+        return this.imagemPerfil;
+    }
+
+    /**
+     * Atribui um valor à imagem do usuário
+     * @param senha caminho da imagem do usuário
+     */
+    public setImagemPerfil(imagem: string): void {
+        this.imagemPerfil = imagem;
+    }
+
     /**
      * Método estático para listar todos os clientes do banco de dados
      * @returns Lista de clientes ou null em caso de erro
@@ -115,80 +132,77 @@ export class Cliente {
         }
     }
 
-    static async cadastrarCliente(cliente: Cliente): Promise<Boolean> {
-        try {
-            // Cria a consulta (query) para inserir o registro de um  no banco de dados, retorna o ID do cliente que foi criado no final
-            const queryInsertCliente = `
-                INSERT INTO Cliente (nome_completo, email, senha, cpf, celular)
-                VALUES (
-                    '${cliente.getNomeCompleto()}',
-                    '${cliente.getEmail()}',
-                    '${cliente.getSenha()}',
-                    '${cliente.getCpf()}',  -- agora é string
-                    '${cliente.getCelular().toLowerCase()}'
-                )
-                RETURNING id_cliente;`;
+   static async cadastrarCliente(cliente: Cliente): Promise<boolean> {
+    try {
+        // Query usando parâmetros para evitar SQL Injection
+        const queryInsertCliente = `
+            INSERT INTO Cliente (nome_completo, email, senha, cpf, celular, imagem_perfil)
+            VALUES ($1, $2, $3, $4, $5, $6)
+            RETURNING id_cliente;
+        `;
 
-            // Executa a query no banco de dados e armazena o resultado
-            const resultBD = await database.query(queryInsertCliente);
+        // Valores que vão substituir os parâmetros $1...$6
+        const values = [
+            cliente.getNomeCompleto(),
+            cliente.getEmail(),
+            cliente.getSenha(),
+            cliente.getCpf(),
+            cliente.getCelular(),
+            cliente.getImagemPerfil()  // Caminho salvo pelo Multer
+        ];
 
-            // verifica se a quantidade de linhas que foram alteradas é maior que 0
-            if (resultBD.rows.length > 0) {
-                // Exibe a mensagem de sucesso
-                console.log(`Cliente cadastrado com sucesso. ID: ${resultBD.rows[0].id_cliente}`);
-                // retorna verdadeiro
-                return true;
-            }
+        const resultBD = await database.query(queryInsertCliente, values);
 
-            // caso a consulta não tenha tido sucesso, retorna falso
-            return false;
-            // captura erro
-        } catch (error) {
-            // Exibe mensagem com detalhes do erro no console
-            console.error(`Erro ao cadastrar cliente: ${error}`);
-            // retorna falso
-            return false;
+        if (resultBD.rows.length > 0) {
+            console.log(`Cliente cadastrado com sucesso. ID: ${resultBD.rows[0].id_cliente}`);
+            return true;
         }
-    }
 
-    /**
-     * Atualiza os dados de um Cliente no banco de dados.
-     * @param Cliente Objeto do tipo Cliente com os novos dados
-     * @returns true caso sucesso, false caso erro
-     */
+        return false;
+
+    } catch (error) {
+        console.error(`Erro ao cadastrar cliente: ${error}`);
+        return false;
+    }
+}
+
     static async atualizarCliente(cliente: Cliente): Promise<boolean> {
-        try {
-            const queryAtualizarCliente = `UPDATE Cliente SET 
-                                            nome_completo = '${cliente.getNomeCompleto().toUpperCase()}', 
-                                            email = '${cliente.getEmail().toLowerCase()}',
-                                            senha = '${cliente.getSenha().toUpperCase()}',
-                                            cpf = '${cliente.getCpf()}',   -- string
-                                            celular = '${cliente.getCelular()}'                                            
-                                            WHERE id_cliente = ${cliente.idCliente}`;
+    try {
+        const queryAtualizarCliente = `
+            UPDATE Cliente 
+            SET nome_completo = $1, 
+                email = $2,
+                senha = $3,
+                cpf = $4,
+                celular = $5,
+                imagem_perfil = $6
+            WHERE id_cliente = $7;
+        `;
 
-                // Executa a query no banco de dados e armazena a resposta.
-            const respostaBD = await database.query(queryAtualizarCliente);
+        const values = [
+            cliente.getNomeCompleto(),
+            cliente.getEmail(),
+            cliente.getSenha(),
+            cliente.getCpf(),
+            cliente.getCelular(),
+            cliente.getImagemPerfil(),
+            cliente.getIdCliente()
+        ];
 
-            // Verifica se alguma linha foi alterada pela operação de atualização.
-            if (respostaBD.rowCount != 0) {
-                // Loga uma mensagem de sucesso no console indicando que o Aluno foi atualizado.
-                console.log(`Cliente atualizado com sucesso! ID: ${cliente.getIdCliente()}`);
-                // Retorna `true` para indicar sucesso na atualização.
-                return true;
-            }
+        const respostaBD = await database.query(queryAtualizarCliente, values);
 
-            // Retorna `false` se nenhuma linha foi alterada (atualização não realizada).
-            return false;
-
-        } catch (error) {
-            // Exibe uma mensagem de erro no console caso ocorra uma exceção.
-            console.log('Erro ao atualizar o Cliente. Verifique os logs para mais detalhes.');
-            // Loga o erro no console para depuração.
-            console.log(error);
-            // Retorna `false` indicando que a atualização falhou.
-            return false;
+        if (respostaBD.rowCount != 0) {
+            console.log(`Cliente atualizado com sucesso! ID: ${cliente.getIdCliente()}`);
+            return true;
         }
+
+        return false;
+    } catch (error) {
+        console.log("Erro ao atualizar Cliente:", error);
+        return false;
     }
+}
+
 
     static async deletarCliente(id_Cliente: number): Promise<Boolean> {
         let queryResult = false;

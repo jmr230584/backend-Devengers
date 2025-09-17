@@ -8,6 +8,7 @@ import { ClienteController } from "./controller/ClienteController";
 import { IngressoController } from "./controller/IngressoController";  
 import { SERVER_ROUTES } from "./appConfig";
 import { Auth } from "./utils/Auth";
+import upload from "./config/multerConfig"; // caminho pode variar dependendo da estrutura
 
 
 import swaggerUi from 'swagger-ui-express';
@@ -61,7 +62,7 @@ router.put(SERVER_ROUTES.ATUALIZAR_SESSAO, SessaoController.atualizar);
  * Define a rota para listar todos os clientes. Quando acessada via GET, chama o método 'todos' do ClienteController.
  */
 router.get(SERVER_ROUTES.LISTAR_CLIENTES, ClienteController.todos);  
-router.post(SERVER_ROUTES.CADASTRAR_CLIENTE, ClienteController.cadastrar);
+// router.post(SERVER_ROUTES.CADASTRAR_CLIENTE, ClienteController.cadastrar);
 router.delete(SERVER_ROUTES.DELETAR_CLIENTE, ClienteController.deletar);
 router.put(SERVER_ROUTES.ATUALIZAR_CLIENTE, ClienteController.atualizar);
 router.post('/login', Auth.validacaoCliente);
@@ -75,6 +76,9 @@ router.get(SERVER_ROUTES.LISTAR_INGRESSO, IngressoController.todos);
 router.post(SERVER_ROUTES.CADASTRAR_INGRESSO, IngressoController.cadastrar);
 router.delete(SERVER_ROUTES.DELETAR_INGRESSO, IngressoController.deletar);
 router.put(SERVER_ROUTES.ATUALIZAR_INGRESSO, IngressoController.atualizar);
+
+// Cadastro de Usuário com Upload de Imagem de Perfil
+router.post(SERVER_ROUTES.CADASTRAR_CLIENTE, upload.single('imagemPerfil'), ClienteController.cadastrar);
 
 /**
  * Exporta o roteador para ser usado em outras partes da aplicação.

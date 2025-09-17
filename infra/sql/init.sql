@@ -91,3 +91,7 @@ ADD disponibilidade VARCHAR(20);
 UPDATE Filme SET disponibilidade = 'Disponível' WHERE disponibilidade IS NULL;
 ALTER TABLE Filme
 ALTER COLUMN disponibilidade SET NOT NULL;
+
+-- Alterando a tabela cliente para adicionar a coluna imagem 
+ALTER TABLE cliente
+ADD COLUMN imagem_perfil VARCHAR(100); 
