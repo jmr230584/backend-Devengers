@@ -3,12 +3,11 @@ import { Cliente } from "../model/Cliente";
 import path from "path";
 import fs from "fs";
 
-// DTO do Cliente
 interface ClienteDTO {
     nomeCompleto: string;
     email: string;
     senha: string;
-    cpf: string;   // string
+    cpf: string;
     celular: string;
 }
 
@@ -39,16 +38,17 @@ export class ClienteController extends Cliente {
             // Caso tenha recebido uma imagem do multer
             if (req.file) {
                 const ext = path.extname(req.file.originalname); 
-                const novoNome = `${Date.now()}${ext}`; // Nome único baseado em timestamp
+                const novoNome = `${Date.now()}${ext}`; 
                 const antigoPath = req.file.path; 
                 const novoPath = path.resolve(req.file.destination, novoNome); 
 
                 fs.renameSync(antigoPath, novoPath); 
 
-                novoCliente.setImagemPerfil(novoNome); 
+                // Gera a URL pública da imagem
+                const urlImagem = `${req.protocol}://${req.get("host")}/uploads/${novoNome}`;
+                novoCliente.setImagemPerfil(urlImagem);
             }
 
-            // Cadastra o cliente no banco
             const cadastrado = await Cliente.cadastrarCliente(novoCliente);
 
             if (!cadastrado) {
@@ -76,7 +76,6 @@ export class ClienteController extends Cliente {
     
             cliente.setIdCliente(parseInt(req.query.idCliente as string));
 
-            // Caso venha nova imagem no update
             if (req.file) {
                 const ext = path.extname(req.file.originalname); 
                 const novoNome = `${cliente.getIdCliente()}${ext}`; 
@@ -85,7 +84,9 @@ export class ClienteController extends Cliente {
 
                 fs.renameSync(antigoPath, novoPath); 
 
-                cliente.setImagemPerfil(novoNome); 
+                // Gera a URL pública da imagem
+                const urlImagem = `${req.protocol}://${req.get("host")}/uploads/${novoNome}`;
+                cliente.setImagemPerfil(urlImagem);
             }
     
             if (await Cliente.atualizarCliente(cliente)) {
