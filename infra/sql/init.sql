@@ -95,3 +95,18 @@ ALTER COLUMN disponibilidade SET NOT NULL;
 -- Alterando a tabela cliente para adicionar a coluna imagem 
 ALTER TABLE cliente
 ADD COLUMN imagem_perfil VARCHAR(100); 
+
+ALTER TABLE ingresso
+ADD COLUMN id_filme_api VARCHAR; 
+
+ALTER TABLE ingresso ADD COLUMN numero_assento INT;
+ALTER TABLE ingresso ADD COLUMN fileira INT;
+
+ALTER TABLE Sessao
+DROP COLUMN IF EXISTS id_filme,
+ADD COLUMN id_filme_api VARCHAR;
+
+ALTER TABLE Sala 
+DROP COLUMN IF EXISTS numero_assento;
+ALTER TABLE Sala 
+DROP COLUMN IF EXISTS fileira;
