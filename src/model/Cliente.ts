@@ -68,6 +68,8 @@ export class Cliente {
     }
 
     static async cadastrarCliente(cliente: Cliente): Promise<boolean> {
+
+        console.log("Cadastrando cliente:", cliente);
         try {
             const queryInsertCliente = `
                 INSERT INTO Cliente (nome_completo, email, senha, cpf, celular, imagem_perfil)

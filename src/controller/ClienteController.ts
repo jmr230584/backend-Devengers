@@ -25,6 +25,7 @@ export class ClienteController extends Cliente {
 
     static async cadastrar(req: Request, res: Response): Promise<any> {
         try {
+            console.log(req.body);
             const dadosRecebidos: ClienteDTO = req.body;
             
             const novoCliente = new Cliente(
@@ -34,6 +35,9 @@ export class ClienteController extends Cliente {
                 dadosRecebidos.cpf,
                 dadosRecebidos.celular
             );
+
+            console.log("Dados do novo cliente:", novoCliente);
+            console.log("Arquivo recebido:", req.file);
 
             // Caso tenha recebido uma imagem do multer
             if (req.file) {
