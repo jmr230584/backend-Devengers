@@ -96,17 +96,27 @@ ALTER COLUMN disponibilidade SET NOT NULL;
 ALTER TABLE cliente
 ADD COLUMN imagem_perfil VARCHAR(100); 
 
+-- Alterando tabela ingresso para adicionar a coluna id_filme_api
 ALTER TABLE ingresso
 ADD COLUMN id_filme_api VARCHAR; 
 
+-- Alterando tabela ingresso para adicionar colunas numero_assento e fileira
 ALTER TABLE ingresso ADD COLUMN numero_assento INT;
 ALTER TABLE ingresso ADD COLUMN fileira INT;
 
+-- Alterando tabela sessao para substituir id_filme por id_filme_api
 ALTER TABLE Sessao
 DROP COLUMN IF EXISTS id_filme,
 ADD COLUMN id_filme_api VARCHAR;
 
+-- Alterando tabela sala para remover colunas numero_assento e fileira
 ALTER TABLE Sala 
 DROP COLUMN IF EXISTS numero_assento;
 ALTER TABLE Sala 
 DROP COLUMN IF EXISTS fileira;
+
+-- Atualizando status_ingresso para 'Concluído' onde aplicável
+ALTER TABLE Ingresso
+ALTER COLUMN status_ingresso SET DEFAULT 'Concluído';
+UPDATE Ingresso
+SET status_ingresso = 'Concluído';
