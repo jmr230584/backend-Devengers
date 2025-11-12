@@ -30,7 +30,7 @@ export class Auth {
         const { email, senha } = req.body;
 
         // query para validar email e senha informados pelo cliente
-        const querySelectUser = `SELECT id_cliente, nome_completo, email FROM cliente WHERE email=$1 AND senha=$2;`;
+        const querySelectUser = `SELECT id_cliente, nome_completo, email, imagem_perfil FROM cliente WHERE email=$1 AND senha=$2;`;
 
         try {
             // faz a requisição ao banco de dados
@@ -43,7 +43,8 @@ export class Auth {
                 const cliente = {
                     id_cliente: queryResult.rows[0].id_cliente,
                     nome_completo: queryResult.rows[0].nome_completo,
-                    email: queryResult.rows[0].email
+                    email: queryResult.rows[0].email,
+                    imagemPerfil: queryResult.rows[0].imagem_perfil
                 }
 
                 // Gera o token do  cliente, passando como parâmetro as informações do objeto professor

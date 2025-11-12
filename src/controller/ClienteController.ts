@@ -25,7 +25,6 @@ export class ClienteController extends Cliente {
 
     static async cadastrar(req: Request, res: Response): Promise<any> {
         try {
-            console.log(req.body);
             const dadosRecebidos: ClienteDTO = req.body;
             
             const novoCliente = new Cliente(
@@ -35,9 +34,6 @@ export class ClienteController extends Cliente {
                 dadosRecebidos.cpf,
                 dadosRecebidos.celular
             );
-
-            console.log("Dados do novo cliente:", novoCliente);
-            console.log("Arquivo recebido:", req.file);
 
             // Caso tenha recebido uma imagem do multer
             if (req.file) {
@@ -62,7 +58,6 @@ export class ClienteController extends Cliente {
             return res.status(201).json({ mensagem: "Cliente cadastrado com sucesso" });
         } catch (error) {
             console.error("Erro ao cadastrar cliente:", error);
-            res.status(500).json({ erro: "Erro ao cadastrar cliente", detalhes: error });
         }
     }
 
