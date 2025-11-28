@@ -110,5 +110,4 @@ export class SalaController extends Sala {
             }
     }
 }
-
 //

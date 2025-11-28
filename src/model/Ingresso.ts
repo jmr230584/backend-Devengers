@@ -195,5 +195,4 @@ export class Ingresso {
     
 }
 
-
 //

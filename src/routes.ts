@@ -85,4 +85,5 @@ router.post(SERVER_ROUTES.CADASTRAR_CLIENTE, upload.single('imagemPerfil'), Clie
  */
 export { router };   
 
+
 //

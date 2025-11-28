@@ -26,3 +26,4 @@ server.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')))
 
 // Exporta o servidor configurado para que ele possa ser usado em outros arquivos.
 export { server };  
+//

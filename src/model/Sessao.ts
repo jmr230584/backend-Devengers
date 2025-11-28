@@ -191,5 +191,4 @@ static async deletarSessao(idSessao: number): Promise<Boolean> {
     
 
 }
-
 //
