@@ -1,11 +1,11 @@
 // Importa os módulos necessários do 'express', incluindo o tipo 'Express', 'Request', 'Response', e 'Router'.
 // Importa também os controladores de cada recurso (Filme, Sala, Sessao, Cliente, Ingresso).
-import { Request, Response, Router } from "express";  
+import { Request, Response, Router, NextFunction } from "express";  
 import { FilmeController } from "./controller/FilmeController";  
 import { SalaController } from "./controller/SalaController";  
 import { SessaoController } from "./controller/SessaoController";  
 import { ClienteController } from "./controller/ClienteController";  
-import { IngressoController } from "./controller/IngressoController";  
+import {IngressoController} from "./controller/IngressoController"; 
 import { SERVER_ROUTES } from "./appConfig";
 import { Auth } from "./utils/Auth";
 import upload from "./config/multerConfig"; // caminho pode variar dependendo da estrutura
@@ -72,10 +72,10 @@ router.get('/rota-protegida', Auth.verifyToken, (req, res) => { res.send('Rota p
  * ROTAS PARA INGRESSO
  * Define a rota para listar todos os ingressos. Quando acessada via GET, chama o método 'todos' do IngressoController.
  */
-router.get(SERVER_ROUTES.LISTAR_INGRESSO, IngressoController.todos);  
+router.get(SERVER_ROUTES.LISTAR_INGRESSO, IngressoController.todos);
 router.post(SERVER_ROUTES.CADASTRAR_INGRESSO, IngressoController.cadastrar);
-router.delete(SERVER_ROUTES.DELETAR_INGRESSO, IngressoController.deletar);
-router.put(SERVER_ROUTES.ATUALIZAR_INGRESSO, IngressoController.atualizar);
+router.delete(SERVER_ROUTES.DELETAR_INGRESSO, (req, res) => IngressoController.deletar(req, res));
+
 
 // Cadastro de Usuário com Upload de Imagem de Perfil
 router.post(SERVER_ROUTES.CADASTRAR_CLIENTE, upload.single('imagemPerfil'), ClienteController.cadastrar);
