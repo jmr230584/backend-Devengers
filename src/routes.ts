@@ -72,7 +72,7 @@ router.get('/rota-protegida', Auth.verifyToken, (req, res) => { res.send('Rota p
  * ROTAS PARA INGRESSO
  * Define a rota para listar todos os ingressos. Quando acessada via GET, chama o método 'todos' do IngressoController.
  */
-router.get(SERVER_ROUTES.LISTAR_INGRESSO, IngressoController.todos);  
+router.get(SERVER_ROUTES.LISTAR_INGRESSO, IngressoController.todos);
 router.post(SERVER_ROUTES.CADASTRAR_INGRESSO, IngressoController.cadastrar);
 router.delete(SERVER_ROUTES.DELETAR_INGRESSO, IngressoController.deletar);
 router.put(SERVER_ROUTES.ATUALIZAR_INGRESSO, IngressoController.atualizar);

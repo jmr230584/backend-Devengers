@@ -120,3 +120,24 @@ ALTER TABLE Ingresso
 ALTER COLUMN status_ingresso SET DEFAULT 'Concluído';
 UPDATE Ingresso
 SET status_ingresso = 'Concluído';
+
+
+
+ALTER TABLE ingresso 
+ADD COLUMN cliente_id INT;
+
+ALTER TABLE ingresso 
+ADD CONSTRAINT fk_ingresso_cliente
+FOREIGN KEY (cliente_id)
+REFERENCES cliente(id_cliente)
+ON DELETE CASCADE;
+
+
+
+SELECT column_name, data_type
+FROM information_schema.columns
+WHERE table_name = 'ingresso';
+
+
+
+SELECT * FROM ingresso WHERE cliente_id = 40 LIMIT 10;

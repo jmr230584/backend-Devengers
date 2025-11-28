@@ -1,5 +1,5 @@
 // Importa os tipos Request e Response da biblioteca 'express', usados para tipar as requisições e respostas na API.
-import { Request, Response } from "express";  
+import { Request, Response } from "express";
 
 // Importa o modelo 'Ingresso', que provavelmente contém métodos e propriedades relacionadas aos ingressos.
 import { Ingresso } from "../model/Ingresso";  
@@ -14,7 +14,7 @@ interface IngressoDTO{
 // Declara a classe 'IngressoController', que herda de 'Ingresso', permitindo acesso aos métodos e propriedades da classe 'Ingresso'.
 export class IngressoController extends Ingresso {  
     // Define o método estático 'todos', que é assíncrono e recebe os parâmetros 'req' (requisição) e 'res' (resposta).
-    static async todos(req: Request, res: Response): Promise<any> {  
+  static async todos(req: Request, res: Response): Promise<any> {
         // Inicia um bloco 'try', que vai tentar executar o código dentro dele e tratar possíveis erros.
         try {  
             // Chama o método 'listarIngressos' da classe 'Ingresso' para obter a lista de ingressos de forma assíncrona.
@@ -23,16 +23,16 @@ export class IngressoController extends Ingresso {
             // Retorna uma resposta com status HTTP 200 (OK) e envia a lista de ingressos como resposta no formato JSON.
             return res.status(200).json(listaDeIngressos);  
         // Se ocorrer algum erro dentro do bloco 'try', o código irá para o bloco 'catch'.
-        } catch (error) {  
+    } catch (error) {
             // Exibe o erro no console para fins de depuração.
             console.log("Erro ao listar ingressos:", error);  
             // Retorna uma resposta com status HTTP 400 (Bad Request) e uma mensagem de erro no formato JSON.
             return res.status(400).json({ mensagem: "Não foi possível listar os ingressos." });  
-        }
     }
+  }
 
-    static async cadastrar(req: Request, res: Response): Promise<any> {
-        try {
+  static async cadastrar(req: Request, res: Response): Promise<any> {
+    try {
             // Desestruturando objeto recebido do front-end
             const dadosRecebidos: IngressoDTO = req.body;
     
@@ -46,7 +46,7 @@ export class IngressoController extends Ingresso {
     
             // Chama o método de persistência no banco
             const result = await Ingresso.cadastrarIngresso(novoIngresso);
-    
+
             // Verifica o resultado da operação
             if (result) {
                 return res.status(200).json('Ingresso cadastrado com sucesso');
@@ -86,17 +86,17 @@ export class IngressoController extends Ingresso {
         console.error(`Erro ao atualizar Ingresso: ${error}`);
         return res.status(500).json({ mensagem: "Erro ao atualizar Ingresso." });
     }
-}
+  }
 
 
     static async deletar(req: Request, res: any) {
-            try {
+    try {
               const idIngresso = parseInt(req.query.idIngresso as string);
         
               if (isNaN(idIngresso)) {
                 return res.status(400).json("ID inválido");
               }
-        
+
               const resultado = await Ingresso.deletarIngresso(idIngresso);
         
               if (resultado) {
@@ -104,10 +104,10 @@ export class IngressoController extends Ingresso {
               } else {
                 return res.status(404).json(resultado);
               }
-            } catch (error) {
-              console.error("Erro ao deletar ingresso:", error);
+    } catch (error) {
+      console.error("Erro ao deletar ingresso:", error);
               return res.status(500).json("Erro no servidor ao deletar ingresso");
-            }
     }
+  }
 }
 //
